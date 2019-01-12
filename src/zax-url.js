@@ -56,9 +56,11 @@ export default {
         if (value === '' || value === null) {
             delete searchObj[key];
         } else {
-            searchObj = Object.assign({}, searchObj, {
-                [key]: value
-            });
+            // searchObj = Object.assign({}, searchObj, {
+            //     [key]: value
+            // });
+            // 卧槽居然不支持
+            searchObj[key] = value
         }
 
         let res = this._objToStr(searchObj)

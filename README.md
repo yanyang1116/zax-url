@@ -1,5 +1,5 @@
 # ZAX Url Util
-## the has 6 modes of amd, cjs, es, iife, system, umd. 
+## there have 6 modes of amd, cjs, es, iife, system, umd. 
 
 ## install
 
@@ -22,56 +22,49 @@ import zaxUrl from 'zax-url'
 ~~~
 
 
-. **compare**
+. **parse**
 ~~~ javascript
-zaxUrl.compare('2018/9/10','2018/9/6')
+zaxUrl.parse('pages/main/index?bizOrigin=foo#bizOrigin=bar')
 ~~~
 
 ~~~ javascript
-1
+{ href: 'pages/main/index?bizOrigin=foo#bizOrigin=bar',
+  hash: '#bizOrigin=bar',
+  search: '?bizOrigin=foo' }
 ~~~
 
-. **offset**
+. **get**
 ~~~ javascript
-zaxUrl.format(zaxUrl.offset('2018/9/10', 'month', 2),'yyyy-mm-dd HH:MM:SS')
-~~~
-
-~~~ javascript
-2018-11-10 00:00:00
-~~~
-
-. **ago**
-~~~ javascript
-zaxUrl.ago('2018/9/11')
+zaxUrl.get('pages/main/index?bizOrigin=foo#bizOrigin=bar', 'bizOrigin')
 ~~~
 
 ~~~ javascript
-2月前
+foo
 ~~~
 
-. **format**
+. **set**
 ~~~ javascript
-zaxUrl.format('2018/10/25', 'yyyy-mm-dd HH:MM')
-~~~
-
-~~~ javascript
-2018-10-25 00:00
-~~~
-
-. **diff**
-~~~ javascript
-zaxUrl.diff('2018/10/27', '2018/10/26')
+zaxUrl.set('pages/main/index?bizOrigin=foo#bizOrigin=bar', 'bizOrigin', 'baz')
 ~~~
 
 ~~~ javascript
-{ days: -1, hours: -0, minutes: -0, seconds: -0 }
+pages/main/index?bizOrigin=baz#bizOrigin=bar
 ~~~
 
-. **age**
+. **del**
 ~~~ javascript
-zaxUrl.age('2018/12/31',true)
+zaxUrl.del('pages/main/index?bizOrigin=foo#bizOrigin=bar', 'bizOrigin')
 ~~~
 
 ~~~ javascript
-7
+pages/main/index#bizOrigin=bar
+~~~
+
+. **search**
+~~~ javascript
+zaxUrl.search('pages/main/index?bizOrigin=foo#bizOrigin=bar')
+~~~
+
+~~~ javascript
+{ bizOrigin: 'foo' }
 ~~~

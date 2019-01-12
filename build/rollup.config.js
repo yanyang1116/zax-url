@@ -20,16 +20,18 @@ tps.map(item => {
             globals: {
                 jquery: '$',
                 lodash: '_',
-                document: 'document',
-                location: 'location',
-                window: 'window',
+                getCurrentPages: "getCurrentPages",
             }
         },
         plugins: [
             nodeResolve({
+                brower: true,
                 module: true,
                 jsnext: true,
-                main: true
+                main: true,
+                customResolveOptions: {
+                    moduleDirectory: 'node_modules'
+                }
             }),
             commonjs({
                 include: 'node_modules/**',
