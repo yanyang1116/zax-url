@@ -1,0 +1,15 @@
+! function(e, r) { "object" == typeof exports && "undefined" != typeof module ? module.exports = r(require("core-js/modules/web.dom.iterable"), require("core-js/modules/es6.array.iterator"), require("core-js/modules/es6.object.keys"), require("core-js/modules/es6.regexp.split"), require("@babel/runtime/helpers/defineProperty"), require("core-js/modules/es6.object.assign"), require("core-js/modules/es6.regexp.replace"), require("core-js/modules/es6.regexp.search")) : "function" == typeof define && define.amd ? define(["core-js/modules/web.dom.iterable", "core-js/modules/es6.array.iterator", "core-js/modules/es6.object.keys", "core-js/modules/es6.regexp.split", "@babel/runtime/helpers/defineProperty", "core-js/modules/es6.object.assign", "core-js/modules/es6.regexp.replace", "core-js/modules/es6.regexp.search"], r) : e.zaxUrl = r(null, null, null, null, e._defineProperty) }(this, function(e, r, t, o, s) { "use strict"; return s = s && s.hasOwnProperty("default") ? s.default : s, { parse: function(e) { try { var r = document.createElement("a"); return r.href = e, { hash: r.hash, host: r.host || location.host, hostname: r.hostname || location.hostname, href: r.href, origin: r.origin, pathname: "/" != r.pathname.charAt(0) ? "/" + r.pathname : r.pathname, port: "0" === r.port || "" === r.port ? this._port(r.protocol) : r.port, protocol: r.protocol && ":" != r.protocol ? r.protocol : location.protocol, search: r.search || "" } } catch (r) { var t = e.slice(e.lastIndexOf("#") > -1 ? e.lastIndexOf("#") : e.length) || "",
+                    o = e.replace(t, ""); return { href: e, hash: t, search: o.slice(o.lastIndexOf("?") > -1 ? o.lastIndexOf("?") : o.length) || "" } } }, get: function(e, r) { if (1 == arguments.length)
+                if (r = e, location) e = location.href;
+                else { var t = getCurrentPages(),
+                        o = t[t.length - 1].route;
+                    e = o.route + o.options } return this.search(e)[r] || "" }, set: function(e, r, t) { if (!r) return console.log("key can not be null"), e; var o = this.search(e); "" === t || null === t ? delete o[r] : o = Object.assign({}, o, s({}, r, t)); var n = this._objToStr(o),
+                c = this.parse(e).hash,
+                l = e.replace(c, ""),
+                a = l.indexOf("?"); return a = a > -1 ? a : l.length, e.slice(0, a) + (n ? "?" + n : "") + c }, del: function(e, r) { return this.set(e, r, null) }, search: function(e) { var r = this.parse(e).search.replace("?", ""); return r ? this._strToObj(r) : (console.log("no search char"), {}) }, _strToObj: function(e) { return e.split("&").reduce(function(e, r) { var t = r.split("="); return t[0] && (e[t[0]] = t[1]), e }, {}) }, _objToStr: function(e) { return Object.keys(e).reduce(function(r, t) { return r.push("".concat(t, "=").concat(e[t])), r }, []).join("&") }, _port: function(e) { switch (e) {
+                case "http:":
+                    return 80;
+                case "https:":
+                    return 443;
+                default:
+                    return location.port } } } });
