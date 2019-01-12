@@ -88,6 +88,14 @@ export default {
         }
         return this._strToObj(search)
     },
+    hash(url) {
+        let hash = this.parse(url).hash.replace('#', '');
+        if (!hash) {
+            console.log('no hash char');
+            return "";
+        }
+        return hash
+    },
     /**
      * string to object
      * @param {String} query 
