@@ -53,13 +53,11 @@ export default {
 
         let searchObj = this.search(url);
 
-        if (value === '' || value === null) {
+        if (arguments.length == 2 && Object.prototype.toString.call(key) === '[object Object]') {
+            Object.assign(searchObj, key)
+        } else if (value === '' || value === null) {
             delete searchObj[key];
         } else {
-            // searchObj = Object.assign({}, searchObj, {
-            //     [key]: value
-            // });
-            // 卧槽居然不支持
             searchObj[key] = value
         }
 
