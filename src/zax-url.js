@@ -81,7 +81,7 @@ export default {
     search(url) {
         let search = this.parse(url).search.replace('?', '');
         if (!search) {
-            console.log('no search char');
+            // console.log('no search char');
             return {};
         }
         return this._strToObj(search)
