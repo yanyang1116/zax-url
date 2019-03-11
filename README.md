@@ -83,6 +83,13 @@ zaxUrl.search('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar
 zaxUrl.hash('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
 ~~~
 
+. **pathKey**
 ~~~ javascript
-/path/id=3?bizOrigin=bar
+zaxUrl.pathKey('/toutiao/d2344444',1)
+zaxUrl.pathKey('/toutiao/news',0)
+~~~
+
+~~~ javascript
+2344444
+news
 ~~~

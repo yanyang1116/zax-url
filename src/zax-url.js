@@ -38,7 +38,10 @@ export default {
                 let pages = getCurrentPages()
                 let len = pages.length
                 let cur = pages[len - 1]
-                let { route, options } = cur.route
+                let {
+                    route,
+                    options
+                } = cur.route
                 url = route + options
             }
         }
@@ -93,6 +96,10 @@ export default {
             return "";
         }
         return hash
+    },
+    pathKey: (url, pos = 0) => {
+        let last = url.split('/').pop()
+        return last.slice(pos)
     },
     /**
      * string to object
