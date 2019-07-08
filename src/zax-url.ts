@@ -1,9 +1,15 @@
 /**
- * zax-util
+ * url module with server & client & miniprogram side
  */
+
 export default {
-    parse(url) {
-        try {
+    /**
+     * parse url to object
+     * @param url string
+     */
+    parse(url: string): object {
+        if (typeof document != 'undefined') {
+            // client side
             let a = document.createElement('a');
             a.href = url;
             return {
@@ -17,8 +23,8 @@ export default {
                 protocol: !a.protocol || ':' == a.protocol ? location.protocol : a.protocol,
                 search: a.search || ''
             };
-        } catch (e) {
-            //mini program
+        } else {
+            //mini program & server side
             let hash = url.slice(url.lastIndexOf('#') > -1 ? url.lastIndexOf('#') : url.length) || '';
             let tmp = url.replace(hash, '');
             let search = tmp.slice(tmp.lastIndexOf('?') > -1 ? tmp.lastIndexOf('?') : tmp.length) || '';
@@ -29,26 +35,41 @@ export default {
             }
         }
     },
-    get(url, key) {
+    /**
+     * get value of url
+     * @param url string
+     * @param key string
+     */
+    get(url: string, key: string): string {
         if (arguments.length == 1) {
             key = url;
-            if (location) {
+            if (typeof document != 'undefined') {
+                //client side
                 url = location.href;
             } else {
-                let pages = getCurrentPages()
-                let len = pages.length
-                let cur = pages[len - 1]
-                let {
-                    route,
-                    options
-                } = cur.route
-                url = route + options
+                if (wx) {
+                    //miniprogram
+                    let pages = getCurrentPages()
+                    let len = pages.length
+                    let cur = pages[len - 1]
+                    let {
+                        route,
+                        options
+                    } = cur.route
+                    url = route + options
+                }
             }
         }
         let searchObj = this.search(url);
         return searchObj[key] || ''
     },
-    set(url, key, value) {
+    /**
+     * get new url
+     * @param url string
+     * @param key string
+     * @param value any
+     */
+    set(url: string, key: string, value: any): string {
         if (!key) {
             console.log('key can not be null');
             return url;
@@ -78,18 +99,31 @@ export default {
 
         return left + mid + right;
     },
-    del(url, key) {
+    /**
+     * delete key & get new url 
+     * @param url string
+     * @param key string
+     */
+    del(url: string, key: string): string {
         return this.set(url, key, null)
     },
-    search(url) {
+    /**
+     * get url search part
+     * @param url string
+     */
+    search(url: string): string {
         let search = this.parse(url).search.replace('?', '');
         if (!search) {
             // console.log('no search char');
-            return {};
+            return '';
         }
         return this._strToObj(search)
     },
-    hash(url) {
+    /**
+     * get url hash part
+     * @param url string
+     */
+    hash(url: string): string {
         let hash = this.parse(url).hash.replace('#', '');
         if (!hash) {
             console.log('no hash char');
@@ -97,15 +131,20 @@ export default {
         }
         return hash
     },
-    pathKey: (url, pos = 0) => {
+    pathKey: (url: string, pos: number = 0): string => {
         let last = url.split('/').pop()
-        return last.slice(pos)
+        let qmark = last.indexOf('?')
+        last = last.slice(0, qmark)
+        let hmark = last.indexOf('#')
+        last = last.slice(0, qmark)
+        last = last.slice(pos)
+        return last
     },
     /**
      * string to object
      * @param {String} query 
      */
-    _strToObj(query) {
+    _strToObj(query: string): object {
         return query.split('&').reduce((sum, item) => {
             let arr = item.split('=')
             arr[0] && (sum[arr[0]] = arr[1])
@@ -116,20 +155,24 @@ export default {
      * object to string
      * @param {Object} options 
      */
-    _objToStr(options) {
+    _objToStr(options: object): string {
         return Object.keys(options).reduce((sum, item) => {
             sum.push(`${item}=${options[item]}`)
             return sum
         }, []).join('&')
     },
-    _port(protocol) {
+    /**
+     * return default port
+     * @param protocol string
+     */
+    _port(protocol: string): number {
         switch (protocol) {
             case 'http:':
                 return 80;
             case 'https:':
                 return 443;
             default:
-                return location.port;
+                return parseInt(location.port);
         }
     },
 }

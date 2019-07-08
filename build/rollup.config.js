@@ -1,17 +1,18 @@
-import babel from 'rollup-plugin-babel';
+import babel from 'rollup-plugin-babel'
 import { terser } from 'rollup-plugin-terser'
-import commonjs from 'rollup-plugin-commonjs';
-import nodeResolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs'
+import nodeResolve from 'rollup-plugin-node-resolve'
+import typescript from 'rollup-plugin-typescript'
 
 //  system, amd, cjs, es, iife, umd
 
-const tps = ['system', 'amd', 'cjs', 'es', 'iife', 'umd'];
+const tps = ['system', 'amd', 'cjs', 'es', 'iife', 'umd']
 
-let cfgs = [];
+let cfgs = []
 
 tps.map(item => {
     cfgs.push({
-        input: 'src/zax-url.js',
+        input: 'src/zax-url.ts',
         external: ['jquery', 'moment', 'lodash'],
         output: {
             format: item,
@@ -20,10 +21,11 @@ tps.map(item => {
             globals: {
                 jquery: '$',
                 lodash: '_',
-                getCurrentPages: "getCurrentPages",
+                getCurrentPages: 'getCurrentPages'
             }
         },
         plugins: [
+            typescript({}),
             nodeResolve({
                 brower: true,
                 module: true,
@@ -34,8 +36,9 @@ tps.map(item => {
                 }
             }),
             commonjs({
+                extensions: ['.js', '.ts'],
                 include: 'node_modules/**',
-                exclude: [],
+                exclude: []
             }),
             babel({
                 exclude: 'node_modules/**',
@@ -44,12 +47,12 @@ tps.map(item => {
             terser({
                 sourcemap: false,
                 output: {
-                    comments: false,
-                },
+                    comments: false
+                }
                 //  numWorkers: os.cpus().length - 1
             })
-        ],
+        ]
     })
 })
 
-export default cfgs;
+export default cfgs
