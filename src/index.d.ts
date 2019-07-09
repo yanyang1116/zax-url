@@ -55,7 +55,7 @@ interface IZaxUrl {
      */
     _port(url: string): number,
     /**
-     * 
+     * a test function
      * @param url 
      * @param num 
      */
