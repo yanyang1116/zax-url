@@ -32,4 +32,4 @@ console.log(zaxUrl.hash('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?biz
 console.log('pathKey')
 console.log(zaxUrl.pathKey('pages/main/index?bizOrigin=foo'))
 console.log(zaxUrl.pathKey('pages/main/index?bizOrigin=foo#tag=1234'))
-console.log(zaxUrl.pathKey('pages/main/index?bizOrigin=foo'))
+console.log(zaxUrl.pathKey('pages/main/index#tag1234'))

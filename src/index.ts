@@ -126,12 +126,7 @@ let expModule = {
     },
     pathKey: (url, pos = 0) => {
         let last = url.split('/').pop()
-        let qmark = last.indexOf('?')
-        last = last.slice(0, qmark)
-        let hmark = last.indexOf('#')
-        last = last.slice(0, qmark)
-        last = last.slice(pos)
-        return last
+        return last.split(/\?|\#/)[0].slice(pos)
     },
     /**
      * string to object
