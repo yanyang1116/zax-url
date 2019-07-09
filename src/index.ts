@@ -5,9 +5,6 @@
  */
 
 export default {
-    /**
-     * parse url to object
-     */
     parse(url) {
         if (typeof document != 'undefined') {
             // client side
@@ -36,9 +33,6 @@ export default {
             }
         }
     },
-    /**
-     * get value of url
-     */
     get(url, key) {
         if (arguments.length == 1) {
             key = url;
@@ -62,10 +56,6 @@ export default {
         let searchObj = this.search(url);
         return searchObj[key] || ''
     },
-    /**
-     * get new url
-     * @param url string
-     */
     set(url, key, value) {
         if (!key) {
             console.log('key can not be null');
@@ -96,15 +86,9 @@ export default {
 
         return left + mid + right;
     },
-    /**
-     * delete key & get new url 
-     */
     del(url, key) {
         return this.set(url, key, null)
     },
-    /**
-     * get url search part
-     */
     search(url) {
         let search = this.parse(url).search.replace('?', '');
         if (!search) {
@@ -113,9 +97,6 @@ export default {
         }
         return this._strToObj(search)
     },
-    /**
-     * get url hash part
-     */
     hash(url) {
         let hash = this.parse(url).hash.replace('#', '');
         if (!hash) {
@@ -128,9 +109,6 @@ export default {
         let last = url.split('/').pop()
         return last.split(/\?|\#/)[0].slice(pos)
     },
-    /**
-     * string to object
-     */
     _strToObj(query) {
         return query.split('&').reduce((sum, item) => {
             let arr = item.split('=')
@@ -138,18 +116,12 @@ export default {
             return sum
         }, {})
     },
-    /**
-     * object to string
-     */
     _objToStr(options) {
         return Object.keys(options).reduce((sum, item) => {
             sum.push(`${item}=${options[item]}`)
             return sum
         }, []).join('&')
     },
-    /**
-     * return default port
-     */
     _port(protocol) {
         switch (protocol) {
             case 'http:':
@@ -160,9 +132,6 @@ export default {
                 return parseInt(location.port);
         }
     },
-    /**
-     * return key of url array
-     */
     testFoo(url, num) {
         return url.split('')[num]
     },
