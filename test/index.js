@@ -1,4 +1,4 @@
-let zaxUrl = require('../libs/umd')
+let zaxUrl = require('zax-url')
 
 // parse
 console.log('parse')
@@ -6,7 +6,8 @@ console.log(zaxUrl.parse('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bi
 
 // get
 console.log('get')
-console.log(zaxUrl.getUrl('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin'))
+console.log(zaxUrl.get('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin'))
+console.log(zaxUrl.get('bizOrigin'))
 
 // set
 console.log('set')

@@ -44,7 +44,7 @@ function get(...args) {
             //client side
             url = location.href;
         } else {
-            if (wx) {
+            if (typeof wx != 'undefined') {
                 //miniprogram
                 let pages = getCurrentPages()
                 let len = pages.length
