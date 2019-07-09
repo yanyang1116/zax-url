@@ -4,7 +4,7 @@
  * url module with server & client & miniprogram side
  */
 
-let expModule = {
+export default {
     /**
      * parse url to object
      */
@@ -168,5 +168,3 @@ let expModule = {
     },
 }
 
-
-export default expModule

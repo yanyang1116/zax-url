@@ -25,7 +25,7 @@ tps.map(item => {
             }
         },
         plugins: [
-            typescript({ module: 'CommonJS' }),
+            typescript(),
             nodeResolve({
                 brower: true,
                 module: true,
