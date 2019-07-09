@@ -1,10 +1,39 @@
 'use strict';
-
+import { ZaxUtil, ZaxUrl } from './index.d.ts'
 /**
  * url module with server & client & miniprogram side
  */
 
-export default {
+let zaxUtil: ZaxUtil = {
+    strToObj(query) {
+        return query.split('&').reduce((sum, item) => {
+            let arr = item.split('=')
+            arr[0] && (sum[arr[0]] = arr[1])
+            return sum
+        }, {})
+    },
+    objToStr(options) {
+        return Object.keys(options).reduce((sum, item) => {
+            sum.push(`${item}=${options[item]}`)
+            return sum
+        }, []).join('&')
+    },
+    port(protocol) {
+        switch (protocol) {
+            case 'http:':
+                return 80;
+            case 'https:':
+                return 443;
+            default:
+                return parseInt(location.port);
+        }
+    },
+    testFoo(url, num) {
+        return url.split('')[num]
+    },
+}
+
+let zaxUrl: ZaxUrl = {
     parse(url) {
         if (typeof document != 'undefined') {
             // client side
@@ -17,7 +46,7 @@ export default {
                 href: a.href,
                 origin: a.origin,
                 pathname: a.pathname.charAt(0) != '/' ? '/' + a.pathname : a.pathname,
-                port: ('0' === a.port || '' === a.port) ? this._port(a.protocol) : a.port,
+                port: ('0' === a.port || '' === a.port) ? expUtil.port(a.protocol) : a.port,
                 protocol: !a.protocol || ':' == a.protocol ? location.protocol : a.protocol,
                 search: a.search || ''
             };
@@ -72,7 +101,7 @@ export default {
             searchObj[key] = value
         }
 
-        let res = this._objToStr(searchObj)
+        let res = expUtil.objToStr(searchObj)
 
         let hash = this.parse(url).hash;
         let tmp = url.replace(hash, '');
@@ -95,7 +124,7 @@ export default {
             // console.log('no search char');
             return '';
         }
-        return this._strToObj(search)
+        return expUtil.strToObj(search)
     },
     hash(url) {
         let hash = this.parse(url).hash.replace('#', '');
@@ -109,31 +138,7 @@ export default {
         let last = url.split('/').pop()
         return last.split(/\?|\#/)[0].slice(pos)
     },
-    _strToObj(query) {
-        return query.split('&').reduce((sum, item) => {
-            let arr = item.split('=')
-            arr[0] && (sum[arr[0]] = arr[1])
-            return sum
-        }, {})
-    },
-    _objToStr(options) {
-        return Object.keys(options).reduce((sum, item) => {
-            sum.push(`${item}=${options[item]}`)
-            return sum
-        }, []).join('&')
-    },
-    _port(protocol) {
-        switch (protocol) {
-            case 'http:':
-                return 80;
-            case 'https:':
-                return 443;
-            default:
-                return parseInt(location.port);
-        }
-    },
-    testFoo(url, num) {
-        return url.split('')[num]
-    },
+
 }
 
+export default zaxUrl

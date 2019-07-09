@@ -1,4 +1,28 @@
-interface IZaxUrl {
+export interface ZaxUtil {
+    /**
+    * string to object
+    * @param url 
+    */
+    strToObj(url: string): object,
+    /**
+     * object to string
+     * @param url 
+     */
+    objToStr(url: string): string
+    /**
+     * get port
+     * @param url 
+     */
+    port(url: string): number,
+    /**
+     * a test function
+     * @param url 
+     * @param num 
+     */
+    testFoo(url: string, num: number): string
+}
+
+export interface ZaxUrl {
     /**
      * parse url to object
      * @param url 
@@ -39,31 +63,9 @@ interface IZaxUrl {
      * @param pos 
      */
     pathKey(url: string, pos: number = 0): string,
-    /**
-     * string to object
-     * @param url 
-     */
-    _strToObj(url: string): object,
-    /**
-     * object to string
-     * @param url 
-     */
-    _objToStr(url: string): string,
-    /**
-     * get port
-     * @param url 
-     */
-    _port(url: string): number,
-    /**
-     * a test function
-     * @param url 
-     * @param num 
-     */
-    testFoo(url: string, num: number): string
+
 }
 
-declare const zaxUrl: IZaxUrl
-
-export default zaxUrl
-
+declare const zaxUrl: ZaxUrl
+declare const zaxUtil: ZaxUtil
 
