@@ -33,6 +33,71 @@ let zaxUtil: ZaxUtil = {
     },
 }
 
+
+function get(key: string): string
+function get(url: string, key: string): string
+function get(...args) {
+    let [url, key] = args
+    if (arguments.length == 1) {
+        key = url
+        if (typeof document != 'undefined') {
+            //client side
+            url = location.href;
+        } else {
+            if (wx) {
+                //miniprogram
+                let pages = getCurrentPages()
+                let len = pages.length
+                let cur = pages[len - 1]
+                let {
+                    route,
+                    options
+                } = cur.route
+                url = route + options
+            }
+        }
+    }
+    if (!url) {
+        console.log('url param lost')
+        return ''
+    }
+    let searchObj = this.search(url);
+    return searchObj[key] || ''
+}
+
+function set(url: string, key: string, value: string): void;
+function set(key: string, value: string): void;
+function set(url, key, value) {
+    if (!key) {
+        console.log('key can not be null');
+        return url;
+    }
+
+    let searchObj = this.search(url);
+
+    if (arguments.length == 2 && Object.prototype.toString.call(key) === '[object Object]') {
+        Object.assign(searchObj, key)
+    } else if (value === '' || value === null) {
+        delete searchObj[key];
+    } else {
+        searchObj[key] = value
+    }
+
+    let res = zaxUtil.objToStr(searchObj)
+
+    let hash = this.parse(url).hash;
+    let tmp = url.replace(hash, '');
+    let askIdx = tmp.indexOf('?');
+
+    askIdx = askIdx > -1 ? askIdx : tmp.length
+
+    let left = url.slice(0, askIdx);
+    let mid = res ? '?' + res : '';
+    let right = hash;
+
+    return left + mid + right;
+}
+
 let zaxUrl: ZaxUrl = {
     parse(url) {
         if (typeof document != 'undefined') {
@@ -46,7 +111,7 @@ let zaxUrl: ZaxUrl = {
                 href: a.href,
                 origin: a.origin,
                 pathname: a.pathname.charAt(0) != '/' ? '/' + a.pathname : a.pathname,
-                port: ('0' === a.port || '' === a.port) ? expUtil.port(a.protocol) : a.port,
+                port: ('0' === a.port || '' === a.port) ? zaxUtil.port(a.protocol) : a.port,
                 protocol: !a.protocol || ':' == a.protocol ? location.protocol : a.protocol,
                 search: a.search || ''
             };
@@ -62,59 +127,8 @@ let zaxUrl: ZaxUrl = {
             }
         }
     },
-    get(url, key) {
-        if (arguments.length == 1) {
-            key = url;
-            if (typeof document != 'undefined') {
-                //client side
-                url = location.href;
-            } else {
-                if (wx) {
-                    //miniprogram
-                    let pages = getCurrentPages()
-                    let len = pages.length
-                    let cur = pages[len - 1]
-                    let {
-                        route,
-                        options
-                    } = cur.route
-                    url = route + options
-                }
-            }
-        }
-        let searchObj = this.search(url);
-        return searchObj[key] || ''
-    },
-    set(url, key, value) {
-        if (!key) {
-            console.log('key can not be null');
-            return url;
-        }
-
-        let searchObj = this.search(url);
-
-        if (arguments.length == 2 && Object.prototype.toString.call(key) === '[object Object]') {
-            Object.assign(searchObj, key)
-        } else if (value === '' || value === null) {
-            delete searchObj[key];
-        } else {
-            searchObj[key] = value
-        }
-
-        let res = expUtil.objToStr(searchObj)
-
-        let hash = this.parse(url).hash;
-        let tmp = url.replace(hash, '');
-        let askIdx = tmp.indexOf('?');
-
-        askIdx = askIdx > -1 ? askIdx : tmp.length
-
-        let left = url.slice(0, askIdx);
-        let mid = res ? '?' + res : '';
-        let right = hash;
-
-        return left + mid + right;
-    },
+    get,
+    set,
     del(url, key) {
         return this.set(url, key, null)
     },
@@ -124,7 +138,7 @@ let zaxUrl: ZaxUrl = {
             // console.log('no search char');
             return '';
         }
-        return expUtil.strToObj(search)
+        return zaxUtil.strToObj(search)
     },
     hash(url) {
         let hash = this.parse(url).hash.replace('#', '');

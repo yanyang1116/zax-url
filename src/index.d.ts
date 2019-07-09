@@ -35,6 +35,18 @@ export interface ZaxUrl {
      */
     get(url: string, key: string): string,
     /**
+    * get key of value of url
+    * @param url 
+    * @param key 
+    */
+    get(key: string): string,
+    /**
+     * set & get new url
+     * @param key 
+     * @param value 
+     */
+    set(key: string, value: string): string,
+    /**
      * set & get new url
      * @param url 
      * @param key 

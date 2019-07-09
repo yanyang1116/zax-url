@@ -7,7 +7,7 @@ import typescript from 'rollup-plugin-typescript'
 //  system, amd, cjs, es, iife, umd
 
 const tps = ['system', 'amd', 'cjs', 'es', 'iife', 'umd']
-
+const extensions = ['.js', '.ts']
 let cfgs = []
 
 tps.map(item => {
@@ -31,12 +31,13 @@ tps.map(item => {
                 module: true,
                 jsnext: true,
                 main: true,
+                extensions,
                 customResolveOptions: {
                     moduleDirectory: 'node_modules'
                 }
             }),
             commonjs({
-                extensions: ['.js', '.ts'],
+                extensions,
                 include: 'node_modules/**',
                 exclude: []
             }),
