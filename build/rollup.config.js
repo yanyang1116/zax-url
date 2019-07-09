@@ -12,7 +12,7 @@ let cfgs = []
 
 tps.map(item => {
     cfgs.push({
-        input: 'src/zax-url.ts',
+        input: 'src/index.ts',
         external: ['jquery', 'moment', 'lodash'],
         output: {
             format: item,
@@ -25,7 +25,7 @@ tps.map(item => {
             }
         },
         plugins: [
-            typescript({}),
+            typescript({ module: 'CommonJS' }),
             nodeResolve({
                 brower: true,
                 module: true,

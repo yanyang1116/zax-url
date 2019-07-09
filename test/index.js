@@ -1,4 +1,4 @@
-let zaxUrl = require('../libs/umd').default
+let zaxUrl = require('zax-url')
 
 // list all of function name
 console.log(Object.keys(zaxUrl))
@@ -33,5 +33,3 @@ console.log('pathKey')
 console.log(zaxUrl.pathKey('pages/main/index?bizOrigin=foo'))
 console.log(zaxUrl.pathKey('pages/main/index?bizOrigin=foo#tag=1234'))
 console.log(zaxUrl.pathKey('pages/main/index?bizOrigin=foo'))
-
-zaxUrl.pathKey()

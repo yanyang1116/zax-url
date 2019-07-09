@@ -1,13 +1,14 @@
+'use strict';
+
 /**
  * url module with server & client & miniprogram side
  */
 
-export default {
+let expModule = {
     /**
      * parse url to object
-     * @param url string
      */
-    parse(url: string): object {
+    parse(url) {
         if (typeof document != 'undefined') {
             // client side
             let a = document.createElement('a');
@@ -37,10 +38,8 @@ export default {
     },
     /**
      * get value of url
-     * @param url string
-     * @param key string
      */
-    get(url: string, key: string): string {
+    get(url, key) {
         if (arguments.length == 1) {
             key = url;
             if (typeof document != 'undefined') {
@@ -66,10 +65,8 @@ export default {
     /**
      * get new url
      * @param url string
-     * @param key string
-     * @param value any
      */
-    set(url: string, key: string, value: any): string {
+    set(url, key, value) {
         if (!key) {
             console.log('key can not be null');
             return url;
@@ -101,17 +98,14 @@ export default {
     },
     /**
      * delete key & get new url 
-     * @param url string
-     * @param key string
      */
-    del(url: string, key: string): string {
+    del(url, key) {
         return this.set(url, key, null)
     },
     /**
      * get url search part
-     * @param url string
      */
-    search(url: string): string {
+    search(url) {
         let search = this.parse(url).search.replace('?', '');
         if (!search) {
             // console.log('no search char');
@@ -121,9 +115,8 @@ export default {
     },
     /**
      * get url hash part
-     * @param url string
      */
-    hash(url: string): string {
+    hash(url) {
         let hash = this.parse(url).hash.replace('#', '');
         if (!hash) {
             console.log('no hash char');
@@ -131,7 +124,7 @@ export default {
         }
         return hash
     },
-    pathKey: (url: string, pos: number = 0): string => {
+    pathKey: (url, pos = 0) => {
         let last = url.split('/').pop()
         let qmark = last.indexOf('?')
         last = last.slice(0, qmark)
@@ -142,9 +135,8 @@ export default {
     },
     /**
      * string to object
-     * @param {String} query 
      */
-    _strToObj(query: string): object {
+    _strToObj(query) {
         return query.split('&').reduce((sum, item) => {
             let arr = item.split('=')
             arr[0] && (sum[arr[0]] = arr[1])
@@ -153,9 +145,8 @@ export default {
     },
     /**
      * object to string
-     * @param {Object} options 
      */
-    _objToStr(options: object): string {
+    _objToStr(options) {
         return Object.keys(options).reduce((sum, item) => {
             sum.push(`${item}=${options[item]}`)
             return sum
@@ -163,9 +154,8 @@ export default {
     },
     /**
      * return default port
-     * @param protocol string
      */
-    _port(protocol: string): number {
+    _port(protocol) {
         switch (protocol) {
             case 'http:':
                 return 80;
@@ -175,4 +165,13 @@ export default {
                 return parseInt(location.port);
         }
     },
+    /**
+     * return key of url array
+     */
+    testFoo(url, num) {
+        return url.split('')[num]
+    },
 }
+
+
+export default expModule
