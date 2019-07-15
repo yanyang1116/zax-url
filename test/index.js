@@ -1,8 +1,9 @@
-let zaxUrl = require('zax-url')
+let { zaxUrl } = require('zax-url')
 
 // parse
 console.log('parse')
 console.log(zaxUrl.parse('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar'))
+
 
 // get
 console.log('get')
