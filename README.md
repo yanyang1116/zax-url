@@ -85,10 +85,10 @@ zaxUrl.hash('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
 
 . **pathKey**
 ~~~ javascript
-console.log(zaxUrl.pathKey('pages/main/index?bizOrigin=foo#tag=1234'))
-console.log(zaxUrl.pathKey('pages/main/index?bizOrigin=foo'))
-console.log(zaxUrl.pathKey('pages/main/index#tag1234'))
-console.log(zaxUrl.pathKey('pages/main/p321#tag1234', 1))
+zaxUrl.pathKey('pages/main/index?bizOrigin=foo#tag=1234')
+zaxUrl.pathKey('pages/main/index?bizOrigin=foo')
+zaxUrl.pathKey('pages/main/index#tag1234')
+zaxUrl.pathKey('pages/main/p321#tag1234', 1)
 ~~~
 
 ~~~ javascript

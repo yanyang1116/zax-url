@@ -66,7 +66,7 @@ function get(...args) {
 
 function set(url: string, key: string, value: string): void;
 function set(key: string, value: string): void;
-function set(url, key, value) {
+function set(url, key, value = '') {
 	if (!key) {
 		console.log('key can not be null');
 		return url;
