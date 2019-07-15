@@ -15,10 +15,10 @@ npm run build
 
 ## use
 
-~~~ javascript 
-const zaxUrl = require('zax-url')
+~~~ javascript
+const { zaxUrl } = require('zax-url')
 or
-import zaxUrl from 'zax-url'
+import { zaxUrl } from 'zax-url'
 ~~~
 
 
