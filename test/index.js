@@ -17,6 +17,7 @@ console.log(zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizO
 console.log(zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', null))
 console.log(zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', ''))
 console.log(zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', undefined))
+console.log(zaxUrl.set('pages/main/index', 'bizOrigin', undefined))
 console.log(zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', { isMiniProgram: 'true', bizOrigin: 1, openId: 2, appCode: 3, hidden: '1', v: 2222222 }))
 console.groupEnd()
 

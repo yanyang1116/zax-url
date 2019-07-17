@@ -45,19 +45,19 @@ foo
 . **set**
 ~~~ javascript
 zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', 'baz')
-zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', {
-    'isMiniProgram': 'true',
-    'bizOrigin': 1,
-    'openId': 2,
-    'appCode': 3,
-    'hidden': '1',
-    'v': 2222222
-})
+zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', null)
+zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', '')
+zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', undefined)
+zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', { isMiniProgram: 'true', bizOrigin: 1, openId: 2, appCode: 3, hidden: '1', v: 2222222 })
 ~~~
 
 ~~~ javascript
 pages/main/index?bizOrigin=baz&other=quz#/path/id=3?bizOrigin=bar
-pages/main/index?bizOrigin=1&other=quz&isMiniProgram=true&openId=2&appCode=3&hidden=1&v=2222222#/path/id=3?bizOrigin=bar
+pages/main/index?other=quz#/path/id=3?bizOrigin=bar
+pages/main/index?other=quz#/path/id=3?bizOrigin=bar
+pages/main/index?other=quz#/path/id=3?bizOrigin=bar
+pages/main/index?bizOrigin=1&other=quz&isMiniProgram=true&openId=2&appCode=3&hidden=1&v=2222222#/path/id=3?b
+izOrigin=bar
 ~~~
 
 . **del**

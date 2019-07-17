@@ -76,7 +76,7 @@ function set(url, key, value = '') {
 
 	if (arguments.length == 2 && Object.prototype.toString.call(key) === '[object Object]') {
 		Object.assign(searchObj, key)
-	} else if (value === '' || value === null) {
+	} else if (value === '' || value === null || value === undefined) {
 		delete searchObj[key];
 	} else {
 		searchObj[key] = value
