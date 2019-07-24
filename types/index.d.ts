@@ -86,7 +86,7 @@ export interface ZaxUrl {
      * @param url
      * @param pos
      */
-	pathKey(url: string, pos: number = 0): string
+	pathKey(url: string, pos: number): string
 
 }
 
