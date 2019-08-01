@@ -14,7 +14,7 @@ export interface ZaxUtil {
 	 * object to string
 	 * @param url
 	 */
-	objToStr(params: object): string
+	objToStr(params: IKV): string
 	/**
 	 * get port
 	 * @param url
