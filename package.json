@@ -1,7 +1,7 @@
 {
     "name": "zax-url",
     "innerModule": false,
-    "version": "1.0.18",
+    "version": "1.0.19",
     "description": "",
     "main": "./libs/umd.js",
     "directories": {
@@ -48,8 +48,8 @@
         "@babel/plugin-transform-runtime": "^7.1.0",
         "@babel/preset-env": "^7.1.0",
         "@babel/preset-typescript": "^7.3.3",
-		"@types/node": "^12.0.12",
-		"chalk": "^2.4.2",
+        "@types/node": "^12.0.12",
+        "chalk": "^2.4.2",
         "done-rainbow": "^0.1.2",
         "fs-extra": "^8.1.0",
         "glob": "^7.1.4",
