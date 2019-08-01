@@ -1,7 +1,7 @@
 {
     "name": "zax-url",
     "innerModule": false,
-    "version": "1.0.17",
+    "version": "1.0.18",
     "description": "",
     "main": "./libs/umd.js",
     "directories": {
@@ -22,9 +22,9 @@
     "files": [
         "libs/*",
         "src/*",
-		"types/*",
-		"build/*",
-		"server/*"
+        "types/*",
+        "build/*",
+        "server/*"
     ],
     "repository": {
         "type": "git",
