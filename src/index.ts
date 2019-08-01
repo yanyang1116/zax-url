@@ -1,57 +1,61 @@
-'use strict';
-import { ZaxUtil, ZaxUrl } from '../types/index.d.ts'
 /**
  * url module with server & client & miniprogram side
  */
 
+'use strict'
+
+import { ZaxUtil, ZaxUrl } from '../types/index'
+interface IKV {
+	[key: string]: string | number
+}
+
 let zaxUtil: ZaxUtil = {
 	strToObj(query) {
-		return query.split('&').reduce((sum, item) => {
+		return query.split('&').reduce((sum: IKV, item: string) => {
 			let arr = item.split('=')
 			arr[0] && (sum[arr[0]] = arr[1])
 			return sum
 		}, {})
 	},
-	objToStr(options) {
-		return Object.keys(options).reduce((sum, item) => {
-			sum.push(`${item}=${options[item]}`)
-			return sum
-		}, []).join('&')
+	objToStr(params: IKV) {
+		return Object.keys(params)
+			.reduce(
+				(sum: string[], item: string) => {
+					sum.push(`${item}=${params[item]}`)
+					return sum
+				},
+				['']
+			)
+			.join('&')
 	},
 	port(protocol) {
 		switch (protocol) {
 			case 'http:':
-				return 80;
+				return '80'
 			case 'https:':
-				return 443;
+				return '443'
 			default:
-				return parseInt(location.port);
+				return location.port
 		}
-	},
-	testFoo(url, num) {
-		return url.split('')[num]
-	},
+	}
 }
 
 function get(key: string): string
 function get(url: string, key: string): string
-function get(...args) {
+function get(...args: string[]) {
 	let [url, key] = args
 	if (arguments.length == 1) {
 		key = url
 		if (typeof document != 'undefined') {
 			//client side
-			url = location.href;
+			url = location.href
 		} else {
 			if (typeof wx != 'undefined') {
 				//miniprogram
 				let pages = getCurrentPages()
 				let len = pages.length
 				let cur = pages[len - 1]
-				let {
-					route,
-					options
-				} = cur.route
+				let { route, options } = cur.route
 				url = route + options
 			}
 		}
@@ -60,49 +64,49 @@ function get(...args) {
 		console.log('url param lost')
 		return ''
 	}
-	let searchObj = this.search(url);
+	let searchObj = zaxUrl.search(url)
 	return searchObj[key] || ''
 }
 
-function set(url: string, key: string, value: string): void;
-function set(key: string, value: string): void;
-function set(url, key, value = '') {
+function set(url: string, key: string, value: string): string
+function set(key: string, value: string): string
+function set(url: any, key: string, value = '') {
 	if (!key) {
-		console.log('key can not be null');
-		return url;
+		console.log('key can not be null')
+		return url
 	}
 
-	let searchObj = this.search(url);
+	let searchObj = zaxUrl.search(url) as IKV
 
 	if (arguments.length == 2 && Object.prototype.toString.call(key) === '[object Object]') {
 		Object.assign(searchObj, key)
 	} else if (value === '' || value === null || value === undefined) {
-		delete searchObj[key];
+		delete searchObj[key]
 	} else {
 		searchObj[key] = value
 	}
 
 	let res = zaxUtil.objToStr(searchObj)
 
-	let hash = this.parse(url).hash;
-	let tmp = url.replace(hash, '');
-	let askIdx = tmp.indexOf('?');
+	let hash = zaxUrl.parse(url).hash
+	let tmp = url.replace(hash, '')
+	let askIdx = tmp.indexOf('?')
 
 	askIdx = askIdx > -1 ? askIdx : tmp.length
 
-	let left = url.slice(0, askIdx);
-	let mid = res ? '?' + res : '';
-	let right = hash;
+	let left = url.slice(0, askIdx)
+	let mid = res ? '?' + res : ''
+	let right = hash
 
-	return left + mid + right;
+	return left + mid + right
 }
 
-let zaxUrl: ZaxUrl = {
+export const zaxUrl: ZaxUrl = {
 	parse(url) {
 		if (typeof document != 'undefined') {
 			// client side
-			let a = document.createElement('a');
-			a.href = url;
+			let a = document.createElement('a')
+			a.href = url
 			return {
 				hash: a.hash,
 				host: a.host || location.host,
@@ -110,49 +114,45 @@ let zaxUrl: ZaxUrl = {
 				href: a.href,
 				origin: a.origin,
 				pathname: a.pathname.charAt(0) != '/' ? '/' + a.pathname : a.pathname,
-				port: ('0' === a.port || '' === a.port) ? zaxUtil.port(a.protocol) : a.port,
+				port: '0' === a.port || '' === a.port ? zaxUtil.port(a.protocol) : a.port,
 				protocol: !a.protocol || ':' == a.protocol ? location.protocol : a.protocol,
 				search: a.search || ''
-			};
+			}
 		} else {
 			//mini program & server side
-			let hash = url.slice(url.lastIndexOf('#') > -1 ? url.lastIndexOf('#') : url.length) || '';
-			let tmp = url.replace(hash, '');
-			let search = tmp.slice(tmp.lastIndexOf('?') > -1 ? tmp.lastIndexOf('?') : tmp.length) || '';
+			let hash = url.slice(url.lastIndexOf('#') > -1 ? url.lastIndexOf('#') : url.length) || ''
+			let tmp = url.replace(hash, '')
+			let search = tmp.slice(tmp.lastIndexOf('?') > -1 ? tmp.lastIndexOf('?') : tmp.length) || ''
 			return {
 				href: url,
 				hash,
 				search
 			}
 		}
-		return urlObject
 	},
 	get,
 	set,
 	del(url, key) {
-		return this.set(url, key, null)
+		return this.set(url, key, '')
 	},
 	search(url) {
-		let search = this.parse(url).search.replace('?', '');
+		let search = this.parse(url).search.replace('?', '')
 		if (!search) {
 			// console.log('no search char');
-			return {};
+			return {}
 		}
 		return zaxUtil.strToObj(search)
 	},
 	hash(url) {
-		let hash = this.parse(url).hash.replace('#', '');
+		let hash = this.parse(url).hash.replace('#', '')
 		if (!hash) {
-			console.log('no hash char');
-			return "";
+			console.log('no hash char')
+			return ''
 		}
 		return hash
 	},
 	pathKey: (url, pos = 0) => {
-		let last = url.split('/').pop()
+		let last = url.split('/').pop() || ''
 		return last.split(/\?|\#/)[0].slice(pos)
-	},
-
+	}
 }
-
-export const zaxUrl

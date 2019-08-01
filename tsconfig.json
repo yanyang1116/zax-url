@@ -61,7 +61,7 @@
 
     },
     "include": [
-        "src/*", "types/index.d.ts",
+        "src/*", "types/index.d.ts", "types/globals.d.ts",
     ],
     "exclude": [
         "node_modules",
