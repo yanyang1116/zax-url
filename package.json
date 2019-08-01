@@ -1,5 +1,6 @@
 {
-    "name": "zax-url",
+	"name": "zax-url",
+	"innerModule": false,
     "version": "1.0.17",
     "description": "",
     "main": "./libs/umd.js",
