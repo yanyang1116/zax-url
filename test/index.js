@@ -1,4 +1,4 @@
-let { zaxUrl } = require('zax-url')
+let { zaxUrl } = require('../libs/umd.js')
 
 // parse
 console.group('parse')

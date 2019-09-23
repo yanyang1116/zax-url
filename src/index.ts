@@ -24,7 +24,7 @@ let zaxUtil: ZaxUtil = {
 					sum.push(`${item}=${params[item]}`)
 					return sum
 				},
-				['']
+				[]
 			)
 			.join('&')
 	},
@@ -124,6 +124,7 @@ export const zaxUrl: ZaxUrl = {
 			let tmp = url.replace(hash, '')
 			let search = tmp.slice(tmp.lastIndexOf('?') > -1 ? tmp.lastIndexOf('?') : tmp.length) || ''
 			return {
+				pathname: url.replace(search, '').replace(hash, ''),
 				href: url,
 				hash,
 				search
@@ -151,8 +152,12 @@ export const zaxUrl: ZaxUrl = {
 		}
 		return hash
 	},
-	pathKey: (url, pos = 0) => {
-		let last = url.split('/').pop() || ''
-		return last.split(/\?|\#/)[0].slice(pos)
+	pathKey(url, pos = 0) {
+		let pathname = this.parse(url).pathname
+		if (pathname) {
+			let last = pathname.split('/').pop() || ''
+			return last.slice(pos)
+		}
+		return ''
 	}
 }
