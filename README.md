@@ -1,43 +1,99 @@
-# Event bus
+# ZAX Url Util
+## support SSR Miniprogram Browser side
 
-[![Build Status](https://travis-ci.org/jsonchou/zax-eventbus.svg?branch=master)](https://travis-ci.org/jsonchou/zax-eventbus)
-[![codecov](https://codecov.io/gh/jsonchou/zax-eventbus/branch/master/graph/badge.svg)](https://codecov.io/gh/jsonchou/zax-eventbus)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+## install
 
-A minimalism but expressive event bus for JS pub/sub scene.
-Just for simple scene.
-You can add your own feature free.
+~~~ base
+npm i zax-url -S
+~~~
 
-## Browsers support
+## build with rollup
 
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari-ios/safari-ios_48x48.png" alt="iOS Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>iOS Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| IE8, IE9, IE10, IE11, Edge                                                                                                                                                                                      | last 10 versions                                                                                                                                                                                                  | last 10 versions                                                                                                                                                                                              | last 2 versions                                                                                                                                                                                               | last 2 versions                                                                                                                                                                                                               | last 2 versions                                                                                                                                                                                           |
+~~~ base
+npm run build
+~~~
 
-## Install
+## use
 
-```bash
-yarn add zax-eventbus --save
-```
+~~~ javascript
+const { zaxUrl } = require('zax-url')
+or
+import { zaxUrl } from 'zax-url'
+~~~
 
-## Usage
 
-```tsx
-import EventBus from "zax-eventbus";
+. **parse**
+~~~ javascript
+zaxUrl.parse('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
+~~~
 
-const eventbus = new EventBus({
-	channel:'default',
-	debug:false
-})
+~~~ javascript
+{ href: 'pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar',
+  hash: '#/path/id=3?bizOrigin=bar',
+  search: '?bizOrigin=foo&other=quz' }
+~~~
 
-eventbus.on("foo", handler);
-eventbus.emit("foo", "bar");
-eventbus.keys();
-eventbus.values();
-eventbus.remove('foo');
-eventbus.removeAll();
-eventbus.removeAll();
+. **get**
+~~~ javascript
+zaxUrl.get('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin')
+~~~
 
-```
+~~~ javascript
+foo
+~~~
 
-As default, eventBus is a global object. But you can import the eventBus constructor for create a new EventBus or inherit it.
+. **set**
+~~~ javascript
+zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', 'baz')
+zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', null)
+zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', '')
+zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', undefined)
+zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', { isMiniProgram: 'true', bizOrigin: 1, openId: 2, appCode: 3, hidden: '1', v: 2222222 })
+~~~
+
+~~~ javascript
+pages/main/index?bizOrigin=baz&other=quz#/path/id=3?bizOrigin=bar
+pages/main/index?other=quz#/path/id=3?bizOrigin=bar
+pages/main/index?other=quz#/path/id=3?bizOrigin=bar
+pages/main/index?other=quz#/path/id=3?bizOrigin=bar
+pages/main/index?bizOrigin=1&other=quz&isMiniProgram=true&openId=2&appCode=3&hidden=1&v=2222222#/path/id=3?b
+izOrigin=bar
+~~~
+
+. **del**
+~~~ javascript
+zaxUrl.del('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin')
+~~~
+
+~~~ javascript
+pages/main/index?other=quz#/path/id=3?bizOrigin=bar
+~~~
+
+. **search**
+~~~ javascript
+zaxUrl.search('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
+~~~
+
+~~~ javascript
+{ bizOrigin: 'foo', other: 'quz' }
+~~~
+
+. **hash**
+~~~ javascript
+zaxUrl.hash('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
+~~~
+
+. **pathKey**
+~~~ javascript
+zaxUrl.pathKey('pages/main/index?bizOrigin=foo#tag=1234')
+zaxUrl.pathKey('pages/main/index?bizOrigin=foo')
+zaxUrl.pathKey('pages/main/index#tag1234')
+zaxUrl.pathKey('pages/main/p321#tag1234', 1)
+~~~
+
+~~~ javascript
+index
+index
+index
+321
+~~~
