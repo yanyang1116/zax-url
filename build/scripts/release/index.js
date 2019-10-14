@@ -1,7 +1,13 @@
+/*
+ * @Author: jsonchou 
+ * @Date: 2019-08-01 18:04:40 
+ * @Last Modified by: jsonchou
+ * @Last Modified time: 2019-08-01 18:45:33
+ */
 const path = require('path')
 const doneRainbow = require('done-rainbow')
 const execSync = require('child_process').execSync
-const {name, version, innerModule } = require('../../../package.json')
+const { version, innerModule } = require('../../../package.json')
 const checkNpm = require('./checkNpm')
 
 let increaseVersion = () => {
@@ -10,15 +16,15 @@ let increaseVersion = () => {
     return prefix + '.' + (parseInt(suffix) + 1)
 }
 
-let doRelease = async () => {
+let doPublish = async () => {
+    let safeNpm = checkNpm(innerModule)
 
-	let skip = checkNpm(innerModule)
-
-    if (!skip) {
+    if (!safeNpm) {
         return
-	}
+    }
 
     let version = increaseVersion()
+
     try {
         execSync(`npm run build`, { stdio: 'inherit' })
     } catch (err) {
@@ -39,14 +45,14 @@ let doRelease = async () => {
         execSync(`npm version ${version} `, { stdio: 'inherit' })
         execSync(`npm publish`, { stdio: 'inherit' })
     } catch (err) {
-        console.log('npm', err)
+        console.log('znpm', err)
         throw err
     }
 
     execSync(`git status`, { stdio: 'inherit' })
     execSync(`git push`, { stdio: 'inherit' })
 
-	doneRainbow(`${name}: version ${version} published!`)
+    doneRainbow(`version ${version} published!`)
 }
 
-doRelease()
+doPublish()
