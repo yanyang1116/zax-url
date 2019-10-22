@@ -38,8 +38,8 @@ import { zaxUrl } from 'zax-url'
 ~~~ javascript
 zaxUrl.parse('https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
 //=> { href: 'https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar',
-  hash: '#/path/id=3?bizOrigin=bar',
-  search: '?bizOrigin=foo&other=quz' }
+  		hash: '#/path/id=3?bizOrigin=bar',
+  		search: '?bizOrigin=foo&other=quz' }
 ~~~
 
 . **get**
@@ -91,4 +91,7 @@ zaxUrl.pathKey('https://demo.com/pages/index#tag1234')
 zaxUrl.pathKey('https://demo.com/pages/index/p321#tag1234', 1)
 //=>321
 ~~~
+
+## [Docs](https://github.com/jsonchou/zax-url/tree/master/docs)
+
 

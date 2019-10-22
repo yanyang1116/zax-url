@@ -1,6 +1,12 @@
-import './globals'
+/**
+ * Url modules.
+ * @module zaxUrl
+ * @author jsonchou
+ * @description url module with server & client & miniprogram side
+ * @see https://github.com/jsonchou/zax-url
+ */
 
-interface IKV {
+export interface IKV {
 	[key: string]: string | number
 }
 

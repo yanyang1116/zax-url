@@ -1,13 +1,12 @@
 /**
- * url module with server & client & miniprogram side
+ * Url modules.
+ * @module zaxUrl
+ * @author jsonchou
+ * @description url module with server & client & miniprogram side
+ * @see https://github.com/jsonchou/zax-url
  */
 
-'use strict'
-
-import { ZaxUtil, ZaxUrl } from '../types/index'
-interface IKV {
-	[key: string]: string | number
-}
+import { ZaxUtil, ZaxUrl, IKV } from './index.d'
 
 let zaxUtil: ZaxUtil = {
 	strToObj(query) {
@@ -30,7 +29,7 @@ let zaxUtil: ZaxUtil = {
 			.join('&')
 	},
 
-	port(protocol)  {
+	port(protocol) {
 		/* istanbul ignore next */
 		switch (protocol) {
 			case 'http:':
