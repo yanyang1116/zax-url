@@ -1,7 +1,20 @@
-# ZAX Url Util
-## support SSR Miniprogram Browser side
+# Zax Url
+## support SSR & Miniprogram & Browser side
 
-## install
+[![NPM version](https://img.shields.io/npm/v/zax-url.svg?style=flat)](https://www.npmjs.com/package/zax-url)
+[![Build Status](https://travis-ci.org/jsonchou/zax-url.svg?branch=master)](https://travis-ci.org/jsonchou/zax-url)
+[![codecov](https://codecov.io/gh/jsonchou/zax-url/branch/master/graph/badge.svg)](https://codecov.io/gh/jsonchou/zax-url)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
+util module
+
+## Browsers support
+
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari-ios/safari-ios_48x48.png" alt="iOS Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>iOS Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| IE8+ Edge+                                                                                                                                                                                                      | last 10 versions                                                                                                                                                                                                  | last 10 versions                                                                                                                                                                                              | last 2 versions                                                                                                                                                                                               | last 2 versions                                                                                                                                                                                                               | last 2 versions                                                                                                                                                                                           |
+
+## Install
 
 ~~~ base
 npm i zax-url -S
@@ -21,79 +34,61 @@ or
 import { zaxUrl } from 'zax-url'
 ~~~
 
-
 . **parse**
 ~~~ javascript
-zaxUrl.parse('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
-~~~
-
-~~~ javascript
-{ href: 'pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar',
+zaxUrl.parse('https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
+//=> { href: 'https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar',
   hash: '#/path/id=3?bizOrigin=bar',
   search: '?bizOrigin=foo&other=quz' }
 ~~~
 
 . **get**
 ~~~ javascript
-zaxUrl.get('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin')
-~~~
-
-~~~ javascript
-foo
+zaxUrl.get('https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin')
+//=>foo
 ~~~
 
 . **set**
 ~~~ javascript
-zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', 'baz')
-zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', null)
-zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', '')
-zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', undefined)
-zaxUrl.set('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', { isMiniProgram: 'true', bizOrigin: 1, openId: 2, appCode: 3, hidden: '1', v: 2222222 })
-~~~
-
-~~~ javascript
-pages/main/index?bizOrigin=baz&other=quz#/path/id=3?bizOrigin=bar
-pages/main/index?other=quz#/path/id=3?bizOrigin=bar
-pages/main/index?other=quz#/path/id=3?bizOrigin=bar
-pages/main/index?other=quz#/path/id=3?bizOrigin=bar
-pages/main/index?bizOrigin=1&other=quz&isMiniProgram=true&openId=2&appCode=3&hidden=1&v=2222222#/path/id=3?b
-izOrigin=bar
+zaxUrl.set('https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', 'baz')
+//=>https://demo.com/pages/index?bizOrigin=baz&other=quz#/path/id=3?bizOrigin=bar
+zaxUrl.set('https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', null)
+//=>https://demo.com/pages/index?other=quz#/path/id=3?bizOrigin=bar
+zaxUrl.set('https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', '')
+//=>https://demo.com/pages/index?other=quz#/path/id=3?bizOrigin=bar
+zaxUrl.set('https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', undefined)
+//=>https://demo.com/pages/index?other=quz#/path/id=3?bizOrigin=bar
+zaxUrl.set('https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', { isMiniProgram: 'true', bizOrigin: 1, openId: 2, appCode: 3, hidden: '1', v: 2222222 })
+//=>https://demo.com/pages/index?bizOrigin=1&other=quz&isMiniProgram=true&openId=2&appCode=3&hidden=1&v=2222222#/path/id=3?bizOrigin=bar
 ~~~
 
 . **del**
 ~~~ javascript
-zaxUrl.del('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin')
-~~~
-
-~~~ javascript
-pages/main/index?other=quz#/path/id=3?bizOrigin=bar
+zaxUrl.del('https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin')
+//=>https://demo.com/pages/index?other=quz#/path/id=3?bizOrigin=bar
 ~~~
 
 . **search**
 ~~~ javascript
-zaxUrl.search('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
-~~~
-
-~~~ javascript
-{ bizOrigin: 'foo', other: 'quz' }
+zaxUrl.search('https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
+//{ bizOrigin: 'foo', other: 'quz' }
 ~~~
 
 . **hash**
 ~~~ javascript
-zaxUrl.hash('pages/main/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
+zaxUrl.hash('https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
+//=>/path/id=3?bizOrigin=bar
 ~~~
 
 . **pathKey**
 ~~~ javascript
-zaxUrl.pathKey('pages/main/index?bizOrigin=foo#tag=1234')
-zaxUrl.pathKey('pages/main/index?bizOrigin=foo')
-zaxUrl.pathKey('pages/main/index#tag1234')
-zaxUrl.pathKey('pages/main/p321#tag1234', 1)
+zaxUrl.pathKey('https://demo.com/pages/index?bizOrigin=foo#tag=1234')
+//=>index
+zaxUrl.pathKey('https://demo.com/pages/index?bizOrigin=foo')
+//=>index
+zaxUrl.pathKey('https://demo.com/pages/index#tag1234')
+//=>index
+zaxUrl.pathKey('https://demo.com/pages/index/p321#tag1234', 1)
+//=>321
 ~~~
 
-~~~ javascript
-index
-index
-index
-321
-~~~

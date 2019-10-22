@@ -20,7 +20,6 @@ export interface ZaxUtil {
 	 * @param url
 	 */
 	port(url: string): string
-
 }
 
 export interface UrlObject {
@@ -34,7 +33,6 @@ export interface UrlObject {
 	port?: string
 	protocol?: string
 }
-
 
 export interface ZaxUrl {
 	/**
@@ -88,7 +86,7 @@ export interface ZaxUrl {
 	 * @param url
 	 * @param pos
 	 */
-	pathKey(url: string, pos: number): string
+	pathKey(url: string, pos?: number): string
 }
 
 declare const zaxUrl: ZaxUrl

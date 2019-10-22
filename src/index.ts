@@ -19,23 +19,27 @@ let zaxUtil: ZaxUtil = {
 	},
 	objToStr(params: IKV) {
 		return Object.keys(params)
-			.reduce(
-				(sum: string[], item: string) => {
+			.reduce((sum: string[], item: string) => {
+				/* istanbul ignore next */
+				if (item && params[item]) {
+					/* istanbul ignore next */
 					sum.push(`${item}=${params[item]}`)
-					return sum
-				},
-				[]
-			)
+				}
+				return sum
+			}, [])
 			.join('&')
 	},
-	port(protocol) {
+
+	port(protocol)  {
+		/* istanbul ignore next */
 		switch (protocol) {
 			case 'http:':
 				return '80'
 			case 'https:':
 				return '443'
 			default:
-				return location.port
+				/* istanbul ignore next */
+				return location.port || '80'
 		}
 	}
 }
@@ -44,6 +48,7 @@ function get(key: string): string
 function get(url: string, key: string): string
 function get(...args: string[]) {
 	let [url, key] = args
+	/* istanbul ignore next */
 	if (arguments.length == 1) {
 		key = url
 		if (typeof document != 'undefined') {
@@ -60,8 +65,9 @@ function get(...args: string[]) {
 			}
 		}
 	}
+	/* istanbul ignore next */
 	if (!url) {
-		console.log('url param lost')
+		console.log('url must be a string')
 		return ''
 	}
 	let searchObj = zaxUrl.search(url)
@@ -70,9 +76,10 @@ function get(...args: string[]) {
 
 function set(url: string, key: string, value: string): string
 function set(key: string, value: string): string
+/* istanbul ignore next */
 function set(url: any, key: string, value = '') {
 	if (!key) {
-		console.log('key can not be null')
+		console.log('key must be a string')
 		return url
 	}
 
@@ -103,6 +110,16 @@ function set(url: any, key: string, value = '') {
 
 export const zaxUrl: ZaxUrl = {
 	parse(url) {
+		if (!url) {
+			console.log('url must be a string')
+			return {
+				href: '',
+				hash: '',
+				search: ''
+			}
+		}
+
+		/* istanbul ignore next */
 		if (typeof document != 'undefined') {
 			// client side
 			let a = document.createElement('a')
@@ -118,7 +135,7 @@ export const zaxUrl: ZaxUrl = {
 				protocol: !a.protocol || ':' == a.protocol ? location.protocol : a.protocol,
 				search: a.search || ''
 			}
-		} else {
+		} /* istanbul ignore next */ else {
 			//mini program & server side
 			let hash = url.slice(url.lastIndexOf('#') > -1 ? url.lastIndexOf('#') : url.length) || ''
 			let tmp = url.replace(hash, '')
@@ -153,11 +170,9 @@ export const zaxUrl: ZaxUrl = {
 		return hash
 	},
 	pathKey(url, pos = 0) {
-		let pathname = this.parse(url).pathname
-		if (pathname) {
-			let last = pathname.split('/').pop() || ''
-			return last.slice(pos)
-		}
-		return ''
+		/* istanbul ignore next */
+		let pathname = this.parse(url).pathname || ''
+		let last = pathname.split('/').pop() || ''
+		return last.slice(pos)
 	}
 }
