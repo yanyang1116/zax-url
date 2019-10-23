@@ -94,4 +94,6 @@ zaxUrl.pathKey('https://demo.com/pages/index/p321#tag1234', 1)
 
 ## [Docs](https://github.com/jsonchou/zax-url/tree/master/docs)
 
+## [Test Case](https://github.com/jsonchou/zax-url/blob/master/__tests__/index.spec.ts)
+
 
