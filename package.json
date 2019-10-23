@@ -15,7 +15,7 @@
 		"build:cjs": "rimraf './libs/cjs' && tsc -t 'ES5' -m 'CommonJS' --outDir './libs/cjs' ",
 		"build:es": "rimraf './libs/es' && tsc -t 'ES6' -m 'ESNext' --outDir './libs/es' ",
 		"build:umd": "rimraf './libs/umd' && tsc -t 'ES5' -m 'UMD' --outDir './libs/umd' ",
-		"doc:index": "rimraf './docs/*.md' && jsdoc2md --files ./src/index.d.ts --no-cache --configure ./jsdoc2md.json > ./docs/README.md",
+		"doc:index": "rimraf './docs/*.md' && jsdoc2md --files ./src/index.ts --no-cache --configure ./jsdoc2md.json > ./docs/README.md",
 		"docs": "npm-run-all -p doc:**",
 		"build": "npm-run-all -p build:**",
 		"server": "NODE_ENV=production  GATEWAY=outer  node ./server/index.js",

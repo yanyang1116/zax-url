@@ -88,6 +88,7 @@ describe('zaxUrl', () => {
 	it(`get`, () => {
 		expect(zaxUrl.get(mixUrl, 'bizOrigin')).toEqual('foo')
 		expect(zaxUrl.get('http://demo.com/?id=1', 'bizOrigin')).toEqual('')
+		expect(zaxUrl.get('http://demo.com/?id=1','')).toEqual('')
 	})
 
 	it(`set`, () => {
