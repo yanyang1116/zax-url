@@ -6,7 +6,7 @@ let waitObj = {
 	k: 0
 }
 
-const mixUrl = 'https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar'
+const mixUrl = 'https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar'
 
 describe('zaxUrl', () => {
 	let keys = Object.keys(zaxUrl)
@@ -23,43 +23,43 @@ describe('zaxUrl', () => {
 			hostname: 'demo.com',
 			href: mixUrl,
 			origin: 'https://demo.com',
-			pathname: '/pages/index',
+			pathname: '/index',
 			port: '443',
 			protocol: 'https:',
 			hash: '#/path/id=3?bizOrigin=bar',
 			search: '?bizOrigin=foo&other=quz'
 		})
 
-		expect(zaxUrl.parse('https://demo.com/pages/index')).toEqual({
+		expect(zaxUrl.parse('https://demo.com/index')).toEqual({
 			host: 'demo.com',
 			hostname: 'demo.com',
-			href: 'https://demo.com/pages/index',
+			href: 'https://demo.com/index',
 			origin: 'https://demo.com',
-			pathname: '/pages/index',
+			pathname: '/index',
 			port: '443',
 			protocol: 'https:',
 			hash: '',
 			search: ''
 		})
 
-		expect(zaxUrl.parse('https://demo.com/pages/index?id=1')).toEqual({
+		expect(zaxUrl.parse('https://demo.com/index?id=1')).toEqual({
 			host: 'demo.com',
 			hostname: 'demo.com',
-			href: 'https://demo.com/pages/index?id=1',
+			href: 'https://demo.com/index?id=1',
 			origin: 'https://demo.com',
-			pathname: '/pages/index',
+			pathname: '/index',
 			port: '443',
 			protocol: 'https:',
 			hash: '',
 			search: '?id=1'
 		})
 
-		expect(zaxUrl.parse('https://demo.com/pages/index#tag')).toEqual({
+		expect(zaxUrl.parse('https://demo.com/index#tag')).toEqual({
 			host: 'demo.com',
 			hostname: 'demo.com',
-			href: 'https://demo.com/pages/index#tag',
+			href: 'https://demo.com/index#tag',
 			origin: 'https://demo.com',
-			pathname: '/pages/index',
+			pathname: '/index',
 			port: '443',
 			protocol: 'https:',
 			hash: '#tag',
@@ -72,12 +72,12 @@ describe('zaxUrl', () => {
 			search: ''
 		})
 
-		expect(zaxUrl.parse('https://demo.com:9090/pages/index#tag')).toEqual({
+		expect(zaxUrl.parse('https://demo.com:9090/index#tag')).toEqual({
 			host: 'demo.com:9090',
 			hostname: 'demo.com',
-			href: 'https://demo.com:9090/pages/index#tag',
+			href: 'https://demo.com:9090/index#tag',
 			origin: 'https://demo.com:9090',
-			pathname: '/pages/index',
+			pathname: '/index',
 			port: '9090',
 			protocol: 'https:',
 			hash: '#tag',
@@ -92,7 +92,7 @@ describe('zaxUrl', () => {
 	})
 
 	it(`set`, () => {
-		expect(zaxUrl.set(mixUrl, 'bizOrigin', 'baz')).toEqual('https://demo.com/pages/index?bizOrigin=baz&other=quz#/path/id=3?bizOrigin=bar')
+		expect(zaxUrl.set(mixUrl, 'bizOrigin', 'baz')).toEqual('https://demo.com/index?bizOrigin=baz&other=quz#/path/id=3?bizOrigin=bar')
 		expect(zaxUrl.set(mixUrl, '', 'baz')).toEqual(mixUrl)
 		expect(zaxUrl.set('http://demo.com/', 'foo', 'bar')).toEqual('http://demo.com/?foo=bar')
 		expect(zaxUrl.set('http://demo.com', 'foo', 'bar')).toEqual('http://demo.com?foo=bar')
@@ -103,12 +103,12 @@ describe('zaxUrl', () => {
 	})
 
 	it(`del`, () => {
-		expect(zaxUrl.del(mixUrl, 'bizOrigin')).toEqual('https://demo.com/pages/index?other=quz#/path/id=3?bizOrigin=bar')
+		expect(zaxUrl.del(mixUrl, 'bizOrigin')).toEqual('https://demo.com/index?other=quz#/path/id=3?bizOrigin=bar')
 	})
 
 	it(`search`, () => {
 		expect(zaxUrl.search(mixUrl)).toEqual({ bizOrigin: 'foo', other: 'quz' })
-		expect(zaxUrl.search('https://demo.com/pages/index#/path/id=3?bizOrigin=bar')).toEqual({})
+		expect(zaxUrl.search('https://demo.com/index#/path/id=3?bizOrigin=bar')).toEqual({})
 	})
 
 	it(`hash`, () => {

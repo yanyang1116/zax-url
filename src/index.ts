@@ -159,13 +159,13 @@ type Nothing2 = {}
  *
  * @example
  * ```js
- * parse("https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * parse("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
  * => {
 	host: 'demo.com',
 	hostname: 'demo.com',
 	href: mixUrl,
 	origin: 'https://demo.com',
-	pathname: '/pages/index',
+	pathname: '/index',
 	port: '443',
 	protocol: 'https:',
 	hash: '#/path/id=3?bizOrigin=bar',
@@ -222,7 +222,7 @@ type Nothing4 = {}
  *
  * @example
  * ```js
- * search("https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * search("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
  * => { bizOrigin: 'foo', other: 'quz' }
  * ```
  *
@@ -245,7 +245,7 @@ type Nothing5 = {}
  *
  * @example
  * ```js
- * hash("https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * hash("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
  * => /path/id=3?bizOrigin=bar
  * ```
  *
@@ -268,7 +268,7 @@ type Nothing6 = {}
  *
  * @example
  * ```js
- * path("https://demo.com/pages/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * path("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
  * => index
  * ```
  *
