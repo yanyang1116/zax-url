@@ -27,5 +27,8 @@ export declare const zaxUrl: {
     search: (url: string) => IKV;
     hash: (url: string) => string;
     pathKey: (url: string, pos?: number) => string;
+    basename: (url: string) => string;
+    extname: (url: string) => string;
+    pathmain: (url: string) => string;
 };
 export {};

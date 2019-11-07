@@ -143,7 +143,8 @@ var parse = function (url) {
         return {
             href: '',
             hash: '',
-            search: ''
+            search: '',
+            pathname: ''
         };
     }
     /* istanbul ignore next */
@@ -221,8 +222,17 @@ var hash = function (url) {
  *
  * @example
  * ```js
- * path("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * pathKey("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
  * => index
+ *
+ *
+ * pathKey("https://demo.com/p123?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar",1)
+ * => 123
+ *
+ *
+ * pathKey("https://demo.com/p-123?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar",2)
+ * => 123
+ *
  * ```
  *
  * @param url {String} url
@@ -231,10 +241,75 @@ var hash = function (url) {
  */
 var pathKey = function (url, pos) {
     if (pos === void 0) { pos = 0; }
-    /* istanbul ignore next */
     var pathname = parse(url).pathname || '';
     var last = pathname.split('/').pop() || '';
     return last.slice(pos);
+};
+/**
+ * get extname from path
+ *
+ * @example
+ * ```js
+ * extname("/test/something/file.txt")
+ * => .txt
+ *
+ * extname("/test/something/file")
+ * => '' // empty
+ *
+ * ```
+ *
+ * @param url {String} url
+ * @returns {String} extname
+ */
+var extname = function (url) {
+    var last = basename(url);
+    if (last && last.indexOf('.') > -1) {
+        var arr = last.split('.');
+        /* istanbul ignore next */
+        var ext = arr.pop() || '';
+        /* istanbul ignore next */
+        if (ext) {
+            return '.' + ext;
+        }
+    }
+    return '';
+};
+/**
+ * get basename from path
+ *
+ * @example
+ * ```js
+ * basename("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * => index
+ *
+ * basename("https://demo.com/dairy.txt?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * => dairy.txt
+ * ```
+ *
+ * @param url {String} url
+ * @returns {String} key path
+ */
+var basename = function (url) {
+    var pathname = parse(url).pathname || '';
+    var last = pathname.split('/').pop();
+    return last || '';
+};
+/**
+ * remove host and left pathname + search + hash
+ *
+ * @example
+ * ```js
+ * pathmain("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * => /index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar
+ * ```
+ *
+ * @param url {String} url
+ * @returns {String} key path
+ */
+var pathmain = function (url) {
+    var info = parse(url);
+    var pathmain = info.pathname + info.search + info.hash;
+    return pathmain;
 };
 exports.zaxUrl = {
     parse: parse,
@@ -243,6 +318,9 @@ exports.zaxUrl = {
     del: del,
     search: search,
     hash: hash,
-    pathKey: pathKey
+    pathKey: pathKey,
+    basename: basename,
+    extname: extname,
+    pathmain: pathmain
 };
 //# sourceMappingURL=index.js.map

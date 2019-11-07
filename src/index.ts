@@ -182,7 +182,8 @@ const parse = (url: string): UrlObject => {
 		return {
 			href: '',
 			hash: '',
-			search: ''
+			search: '',
+			pathname: ''
 		}
 	}
 	/* istanbul ignore next */
@@ -268,8 +269,17 @@ type Nothing6 = {}
  *
  * @example
  * ```js
- * path("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * pathKey("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
  * => index
+ *
+ *
+ * pathKey("https://demo.com/p123?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar",1)
+ * => 123
+ *
+ *
+ * pathKey("https://demo.com/p-123?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar",2)
+ * => 123
+ *
  * ```
  *
  * @param url {String} url
@@ -277,10 +287,84 @@ type Nothing6 = {}
  * @returns {String} key path
  */
 const pathKey = (url: string, pos = 0): string => {
-	/* istanbul ignore next */
 	let pathname = parse(url).pathname || ''
 	let last = pathname.split('/').pop() || ''
 	return last.slice(pos)
+}
+
+type Nothing11 = {}
+
+/**
+ * get extname from path
+ *
+ * @example
+ * ```js
+ * extname("/test/something/file.txt")
+ * => .txt
+ *
+ * extname("/test/something/file")
+ * => '' // empty
+ *
+ * ```
+ *
+ * @param url {String} url
+ * @returns {String} extname
+ */
+const extname = (url: string): string => {
+	let last = basename(url)
+	if (last && last.indexOf('.') > -1) {
+		let arr = last.split('.')
+		/* istanbul ignore next */
+		let ext = arr.pop() || ''
+		/* istanbul ignore next */
+		if (ext) {
+			return '.' + ext
+		}
+	}
+	return ''
+}
+
+type Nothing10 = {}
+
+/**
+ * get basename from path
+ *
+ * @example
+ * ```js
+ * basename("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * => index
+ *
+ * basename("https://demo.com/dairy.txt?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * => dairy.txt
+ * ```
+ *
+ * @param url {String} url
+ * @returns {String} key path
+ */
+const basename = (url: string): string => {
+	let pathname = parse(url).pathname || ''
+	let last = pathname.split('/').pop()
+	return last || ''
+}
+
+type Nothing8 = {}
+
+/**
+ * remove host and left pathname + search + hash
+ *
+ * @example
+ * ```js
+ * pathmain("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * => /index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar
+ * ```
+ *
+ * @param url {String} url
+ * @returns {String} key path
+ */
+const pathmain = (url: string): string => {
+	let info = parse(url)
+	let pathmain = info.pathname + info.search + info.hash
+	return pathmain
 }
 
 export const zaxUrl = {
@@ -290,5 +374,8 @@ export const zaxUrl = {
 	del,
 	search,
 	hash,
-	pathKey
+	pathKey,
+	basename,
+	extname,
+	pathmain
 }
