@@ -63,9 +63,10 @@ var get = function (url, key) {
         console.log('key must be a string');
         return '';
     }
-    var searchObj = exports.zaxUrl.search(url);
+    var searchObj = zaxUrl.search(url);
     return searchObj[key] || '';
 };
+exports.get = get;
 /* istanbul ignore next */
 /**
  * set & get new url
@@ -87,10 +88,10 @@ var set = function (url, key, value) {
         console.log('key must be a string');
         return url;
     }
-    var searchObj = exports.zaxUrl.search(url);
+    var searchObj = zaxUrl.search(url);
     searchObj[key] = value;
     var res = zaxUtil.objToStr(searchObj);
-    var hash = exports.zaxUrl.parse(url).hash;
+    var hash = zaxUrl.parse(url).hash;
     var tmp = url.replace(hash, '');
     var askIdx = tmp.indexOf('?');
     askIdx = askIdx > -1 ? askIdx : tmp.length;
@@ -99,6 +100,7 @@ var set = function (url, key, value) {
     var right = hash;
     return left + mid + right;
 };
+exports.set = set;
 /**
  * delete key & get new url
  *
@@ -115,6 +117,7 @@ var set = function (url, key, value) {
 var del = function (url, key) {
     return set(url, key, '');
 };
+exports.del = del;
 /**
  * get key of value of url
  *
@@ -177,6 +180,7 @@ var parse = function (url) {
         };
     }
 };
+exports.parse = parse;
 /**
  * get url search part
  *
@@ -197,6 +201,7 @@ var search = function (url) {
     }
     return zaxUtil.strToObj(search);
 };
+exports.search = search;
 /**
  * get url hash part without # prefix
  *
@@ -217,6 +222,7 @@ var hash = function (url) {
     }
     return hash;
 };
+exports.hash = hash;
 /**
  * get last url part of key
  *
@@ -245,6 +251,7 @@ var pathKey = function (url, pos) {
     var last = pathname.split('/').pop() || '';
     return last.slice(pos);
 };
+exports.pathKey = pathKey;
 /**
  * get extname from path
  *
@@ -274,6 +281,7 @@ var extname = function (url) {
     }
     return '';
 };
+exports.extname = extname;
 /**
  * get basename from path
  *
@@ -294,6 +302,7 @@ var basename = function (url) {
     var last = pathname.split('/').pop();
     return last || '';
 };
+exports.basename = basename;
 /**
  * remove host and left pathname + search + hash
  *
@@ -311,7 +320,8 @@ var pathmain = function (url) {
     var pathmain = info.pathname + info.search + info.hash;
     return pathmain;
 };
-exports.zaxUrl = {
+exports.pathmain = pathmain;
+var zaxUrl = {
     parse: parse,
     get: get,
     set: set,
@@ -323,4 +333,5 @@ exports.zaxUrl = {
     extname: extname,
     pathmain: pathmain
 };
+exports.default = zaxUrl;
 //# sourceMappingURL=index.js.map

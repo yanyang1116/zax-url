@@ -72,9 +72,10 @@
             console.log('key must be a string');
             return '';
         }
-        var searchObj = exports.zaxUrl.search(url);
+        var searchObj = zaxUrl.search(url);
         return searchObj[key] || '';
     };
+    exports.get = get;
     /* istanbul ignore next */
     /**
      * set & get new url
@@ -96,10 +97,10 @@
             console.log('key must be a string');
             return url;
         }
-        var searchObj = exports.zaxUrl.search(url);
+        var searchObj = zaxUrl.search(url);
         searchObj[key] = value;
         var res = zaxUtil.objToStr(searchObj);
-        var hash = exports.zaxUrl.parse(url).hash;
+        var hash = zaxUrl.parse(url).hash;
         var tmp = url.replace(hash, '');
         var askIdx = tmp.indexOf('?');
         askIdx = askIdx > -1 ? askIdx : tmp.length;
@@ -108,6 +109,7 @@
         var right = hash;
         return left + mid + right;
     };
+    exports.set = set;
     /**
      * delete key & get new url
      *
@@ -124,6 +126,7 @@
     var del = function (url, key) {
         return set(url, key, '');
     };
+    exports.del = del;
     /**
      * get key of value of url
      *
@@ -186,6 +189,7 @@
             };
         }
     };
+    exports.parse = parse;
     /**
      * get url search part
      *
@@ -206,6 +210,7 @@
         }
         return zaxUtil.strToObj(search);
     };
+    exports.search = search;
     /**
      * get url hash part without # prefix
      *
@@ -226,6 +231,7 @@
         }
         return hash;
     };
+    exports.hash = hash;
     /**
      * get last url part of key
      *
@@ -254,6 +260,7 @@
         var last = pathname.split('/').pop() || '';
         return last.slice(pos);
     };
+    exports.pathKey = pathKey;
     /**
      * get extname from path
      *
@@ -283,6 +290,7 @@
         }
         return '';
     };
+    exports.extname = extname;
     /**
      * get basename from path
      *
@@ -303,6 +311,7 @@
         var last = pathname.split('/').pop();
         return last || '';
     };
+    exports.basename = basename;
     /**
      * remove host and left pathname + search + hash
      *
@@ -320,7 +329,8 @@
         var pathmain = info.pathname + info.search + info.hash;
         return pathmain;
     };
-    exports.zaxUrl = {
+    exports.pathmain = pathmain;
+    var zaxUrl = {
         parse: parse,
         get: get,
         set: set,
@@ -332,5 +342,6 @@
         extname: extname,
         pathmain: pathmain
     };
+    exports.default = zaxUrl;
 });
 //# sourceMappingURL=index.js.map

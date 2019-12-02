@@ -307,7 +307,7 @@ const pathmain = (url) => {
     let pathmain = info.pathname + info.search + info.hash;
     return pathmain;
 };
-export const zaxUrl = {
+const zaxUrl = {
     parse,
     get,
     set,
@@ -319,4 +319,6 @@ export const zaxUrl = {
     extname,
     pathmain
 };
+export { parse, get, set, del, search, hash, pathKey, basename, extname, pathmain };
+export default zaxUrl;
 //# sourceMappingURL=index.js.map
