@@ -34,64 +34,6 @@ or
 import { zaxUrl } from 'zax-url'
 ~~~
 
-. **parse**
-~~~ javascript
-zaxUrl.parse('https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
-//=> { href: 'https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar',
-  		hash: '#/path/id=3?bizOrigin=bar',
-  		search: '?bizOrigin=foo&other=quz' }
-~~~
-
-. **get**
-~~~ javascript
-zaxUrl.get('https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin')
-//=>foo
-~~~
-
-. **set**
-~~~ javascript
-zaxUrl.set('https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', 'baz')
-//=>https://demo.com/index?bizOrigin=baz&other=quz#/path/id=3?bizOrigin=bar
-zaxUrl.set('https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', null)
-//=>https://demo.com/index?other=quz#/path/id=3?bizOrigin=bar
-zaxUrl.set('https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', '')
-//=>https://demo.com/index?other=quz#/path/id=3?bizOrigin=bar
-zaxUrl.set('https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin', undefined)
-//=>https://demo.com/index?other=quz#/path/id=3?bizOrigin=bar
-zaxUrl.set('https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', { isMiniProgram: 'true', bizOrigin: 1, openId: 2, appCode: 3, hidden: '1', v: 2222222 })
-//=>https://demo.com/index?bizOrigin=1&other=quz&isMiniProgram=true&openId=2&appCode=3&hidden=1&v=2222222#/path/id=3?bizOrigin=bar
-~~~
-
-. **del**
-~~~ javascript
-zaxUrl.del('https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar', 'bizOrigin')
-//=>https://demo.com/index?other=quz#/path/id=3?bizOrigin=bar
-~~~
-
-. **search**
-~~~ javascript
-zaxUrl.search('https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
-//{ bizOrigin: 'foo', other: 'quz' }
-~~~
-
-. **hash**
-~~~ javascript
-zaxUrl.hash('https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
-//=>/path/id=3?bizOrigin=bar
-~~~
-
-. **pathKey**
-~~~ javascript
-zaxUrl.pathKey('https://demo.com/index?bizOrigin=foo#tag=1234')
-//=>index
-zaxUrl.pathKey('https://demo.com/index?bizOrigin=foo')
-//=>index
-zaxUrl.pathKey('https://demo.com/index#tag1234')
-//=>index
-zaxUrl.pathKey('https://demo.com/index/p321#tag1234', 1)
-//=>321
-~~~
-
 ## [Docs](https://github.com/jsonchou/zax-url/tree/master/docs)
 
 ## [Test Case](https://github.com/jsonchou/zax-url/blob/master/__tests__/index.spec.ts)
