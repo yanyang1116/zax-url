@@ -29,9 +29,9 @@ npm run build
 ## use
 
 ~~~ javascript
-const { zaxUrl } = require('zax-url')
+const zaxUrl = require('zax-url')
 or
-import { zaxUrl } from 'zax-url'
+import zaxUrl from 'zax-url'
 ~~~
 
 ## [Docs](https://github.com/jsonchou/zax-url/tree/master/docs)

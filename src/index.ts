@@ -367,7 +367,7 @@ const pathmain = (url: string): string => {
 	return pathmain
 }
 
-export const zaxUrl = {
+const zaxUrl = {
 	parse,
 	get,
 	set,
@@ -379,3 +379,18 @@ export const zaxUrl = {
 	extname,
 	pathmain
 }
+
+export {
+	parse,
+	get,
+	set,
+	del,
+	search,
+	hash,
+	pathKey,
+	basename,
+	extname,
+	pathmain
+}
+
+export default zaxUrl
