@@ -141,15 +141,15 @@ describe('zaxUrl', () => {
 		expect(zaxUrl.set('http://demo.com?id=1#test', 'foo', 'bar')).toEqual('http://demo.com?id=1&foo=bar#test')
 		expect(zaxUrl.set('http://demo.com/?id=1#test', 'foo', 'bar')).toEqual('http://demo.com/?id=1&foo=bar#test')
 
-		expect(zaxUrl.set('https://a-uat.zhongan.com/p/83755233', 'accessKey', '123')).toEqual('https://a-uat.zhongan.com/p/83755233?accessKey=123')
+		expect(zaxUrl.set('https://a-uat.demo.com/p/83755233', 'accessKey', '123')).toEqual('https://a-uat.demo.com/p/83755233?accessKey=123')
 		expect(
 			zaxUrl.set(
-				'https://static.zhongan.com/website/mobile/html/public/min-program-middle.html?hidden=1&appCode=ZABXMiniApp&v=0.&type=set&accessKey=&isMiniProgram=true&openId=%253D&backUrl=https%3A%2F%2Fa-uat.zhongan.com%2Fp%2F83755233%3FisMiniProgram%3Dtrue%26openId%3D%253D%26appCode%3DZABXMiniApp%26wxCode%%26hidden%3D1%26realChannelId%3D5%26v%3D1572328560526%23%2F%3FbizOrigin%3Dxcxsy_tj',
+				'https://static.demo.com/website/mobile/html/public/min-program-middle.html?hidden=1&appCode=ZABXMiniApp&v=0.&type=set&accessKey=&isMiniProgram=true&openId=%253D&backUrl=https%3A%2F%2Fa-uat.demo.com%2Fp%2F83755233%3FisMiniProgram%3Dtrue%26openId%3D%253D%26appCode%3DZABXMiniApp%26wxCode%%26hidden%3D1%26realChannelId%3D5%26v%3D1572328560526%23%2F%3FbizOrigin%3Dxcxsy_tj',
 				'accessKey',
 				'123'
 			)
 		).toEqual(
-			'https://static.zhongan.com/website/mobile/html/public/min-program-middle.html?hidden=1&appCode=ZABXMiniApp&v=0.&type=set&accessKey=123&isMiniProgram=true&openId=%253D&backUrl=https%3A%2F%2Fa-uat.zhongan.com%2Fp%2F83755233%3FisMiniProgram%3Dtrue%26openId%3D%253D%26appCode%3DZABXMiniApp%26wxCode%%26hidden%3D1%26realChannelId%3D5%26v%3D1572328560526%23%2F%3FbizOrigin%3Dxcxsy_tj'
+			'https://static.demo.com/website/mobile/html/public/min-program-middle.html?hidden=1&appCode=ZABXMiniApp&v=0.&type=set&accessKey=123&isMiniProgram=true&openId=%253D&backUrl=https%3A%2F%2Fa-uat.demo.com%2Fp%2F83755233%3FisMiniProgram%3Dtrue%26openId%3D%253D%26appCode%3DZABXMiniApp%26wxCode%%26hidden%3D1%26realChannelId%3D5%26v%3D1572328560526%23%2F%3FbizOrigin%3Dxcxsy_tj'
 		)
 	})
 
