@@ -78,12 +78,12 @@ type Nothing7 = {}
 const get = (url: string, key: string): string => {
 	/* istanbul ignore next */
 	if (!url) {
-		console.log('url must be a string')
+		// console.log('url must be a string')
 		return ''
 	}
 
 	if (!key) {
-		console.log('key must be a string')
+		// console.log('key must be a string')
 		return ''
 	}
 
@@ -178,7 +178,7 @@ type Nothing2 = {}
  */
 const parse = (url: string): UrlObject => {
 	if (!url) {
-		console.log('url must be a string')
+		// console.log('url must be a string')
 		return {
 			href: '',
 			hash: '',

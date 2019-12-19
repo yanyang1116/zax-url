@@ -54,11 +54,11 @@ let zaxUtil = {
 const get = (url, key) => {
     /* istanbul ignore next */
     if (!url) {
-        console.log('url must be a string');
+        // console.log('url must be a string');
         return '';
     }
     if (!key) {
-        console.log('key must be a string');
+        // console.log('key must be a string');
         return '';
     }
     let searchObj = zaxUrl.search(url);
@@ -136,7 +136,7 @@ const del = (url, key) => {
  */
 const parse = (url) => {
     if (!url) {
-        console.log('url must be a string');
+        // console.log('url must be a string');
         return {
             href: '',
             hash: '',

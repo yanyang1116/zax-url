@@ -65,11 +65,11 @@
     var get = function (url, key) {
         /* istanbul ignore next */
         if (!url) {
-            console.log('url must be a string');
+            // console.log('url must be a string');
             return '';
         }
         if (!key) {
-            console.log('key must be a string');
+            // console.log('key must be a string');
             return '';
         }
         var searchObj = zaxUrl.search(url);
@@ -151,7 +151,7 @@
      */
     var parse = function (url) {
         if (!url) {
-            console.log('url must be a string');
+            // console.log('url must be a string');
             return {
                 href: '',
                 hash: '',
