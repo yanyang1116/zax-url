@@ -20,13 +20,7 @@ util module
 npm i zax-url -S
 ~~~
 
-## build with rollup
-
-~~~ base
-npm run build
-~~~
-
-## use
+## Usage
 
 ~~~ javascript
 const zaxUrl = require('zax-url')
