@@ -51,17 +51,17 @@ let zaxUtil = {
  * @param key {String} key
  * @returns {String} string of result
  */
-const get = (url, key) => {
+export const get = (url, key) => {
     /* istanbul ignore next */
     if (!url) {
-        // console.log('url must be a string');
+        // console.log('url must be a string')
         return '';
     }
     if (!key) {
-        // console.log('key must be a string');
+        // console.log('key must be a string')
         return '';
     }
-    let searchObj = zaxUrl.search(url);
+    let searchObj = search(url);
     return searchObj[key] || '';
 };
 /* istanbul ignore next */
@@ -79,15 +79,15 @@ const get = (url, key) => {
  * @param value {String} value
  * @returns {String} new url
  */
-const set = (url, key, value = '') => {
+export const set = (url, key, value = '') => {
     if (!key) {
         console.log('key must be a string');
         return url;
     }
-    let searchObj = zaxUrl.search(url);
+    let searchObj = search(url);
     searchObj[key] = value;
     let res = zaxUtil.objToStr(searchObj);
-    let hash = zaxUrl.parse(url).hash;
+    let hash = parse(url).hash;
     let tmp = url.replace(hash, '');
     let askIdx = tmp.indexOf('?');
     askIdx = askIdx > -1 ? askIdx : tmp.length;
@@ -109,7 +109,7 @@ const set = (url, key, value = '') => {
  * @param key {String} key
  * @returns {String} new url
  */
-const del = (url, key) => {
+export const del = (url, key) => {
     return set(url, key, '');
 };
 /**
@@ -134,9 +134,9 @@ const del = (url, key) => {
  * @param url {String} url
  * @returns {UrlObject} parse object
  */
-const parse = (url) => {
+export const parse = (url) => {
     if (!url) {
-        // console.log('url must be a string');
+        // console.log('url must be a string')
         return {
             href: '',
             hash: '',
@@ -186,7 +186,7 @@ const parse = (url) => {
  * @param url {String} url
  * @returns {IKV} url search part
  */
-const search = (url) => {
+export const search = (url) => {
     let search = parse(url).search.replace('?', '');
     if (!search) {
         // console.log('no search char');
@@ -206,7 +206,7 @@ const search = (url) => {
  * @param url {String} url
  * @returns {String} url hash part
  */
-const hash = (url) => {
+export const hash = (url) => {
     let hash = parse(url).hash.replace('#', '');
     if (!hash) {
         console.log('no hash char');
@@ -236,7 +236,7 @@ const hash = (url) => {
  * @param pos {Number} pos
  * @returns {String} key path
  */
-const pathKey = (url, pos = 0) => {
+export const pathKey = (url, pos = 0) => {
     let pathname = parse(url).pathname || '';
     let last = pathname.split('/').pop() || '';
     return last.slice(pos);
@@ -257,7 +257,7 @@ const pathKey = (url, pos = 0) => {
  * @param url {String} url
  * @returns {String} extname
  */
-const extname = (url) => {
+export const extname = (url) => {
     let last = basename(url);
     if (last && last.indexOf('.') > -1) {
         let arr = last.split('.');
@@ -285,7 +285,7 @@ const extname = (url) => {
  * @param url {String} url
  * @returns {String} key path
  */
-const basename = (url) => {
+export const basename = (url) => {
     let pathname = parse(url).pathname || '';
     let last = pathname.split('/').pop();
     return last || '';
@@ -302,12 +302,12 @@ const basename = (url) => {
  * @param url {String} url
  * @returns {String} key path
  */
-const pathmain = (url) => {
+export const pathmain = (url) => {
     let info = parse(url);
     let pathmain = info.pathname + info.search + info.hash;
     return pathmain;
 };
-const zaxUrl = {
+export default {
     parse,
     get,
     set,
@@ -319,6 +319,4 @@ const zaxUrl = {
     extname,
     pathmain
 };
-export { parse, get, set, del, search, hash, pathKey, basename, extname, pathmain };
-export default zaxUrl;
 //# sourceMappingURL=index.js.map

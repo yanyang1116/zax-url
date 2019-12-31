@@ -1,26 +1,12 @@
-import zaxUrl, {
-	parse,
-	get,
-	set,
-	del,
-	search,
-	hash,
-	pathKey,
-	basename,
-	extname,
-	pathmain
-} from '../src/index'
+import zaxUrl, { parse, get, set, del, search, hash, pathKey, basename, extname, pathmain } from '../src/index'
 
 import { log } from '../src/_utils/index'
-
-let waitObj = {
-	k: 0
-}
 
 const mixUrl = 'https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar'
 
 describe('zaxUrl', () => {
 	let keys = Object.keys(zaxUrl)
+
 	keys.forEach(par => {
 		it(`should have ${par} method`, () => {
 			expect(zaxUrl).toHaveProperty(par)

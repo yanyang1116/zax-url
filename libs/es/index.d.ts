@@ -32,7 +32,7 @@ declare type UrlObject = {
  * @param key {String} key
  * @returns {String} string of result
  */
-declare const get: (url: string, key: string) => string;
+export declare const get: (url: string, key: string) => string;
 /**
  * set & get new url
  *
@@ -47,7 +47,7 @@ declare const get: (url: string, key: string) => string;
  * @param value {String} value
  * @returns {String} new url
  */
-declare const set: (url: string, key: string, value?: string) => string;
+export declare const set: (url: string, key: string, value?: string) => string;
 /**
  * delete key & get new url
  *
@@ -61,7 +61,7 @@ declare const set: (url: string, key: string, value?: string) => string;
  * @param key {String} key
  * @returns {String} new url
  */
-declare const del: (url: string, key: string) => string;
+export declare const del: (url: string, key: string) => string;
 /**
  * get key of value of url
  *
@@ -84,7 +84,7 @@ declare const del: (url: string, key: string) => string;
  * @param url {String} url
  * @returns {UrlObject} parse object
  */
-declare const parse: (url: string) => UrlObject;
+export declare const parse: (url: string) => UrlObject;
 /**
  * get url search part
  *
@@ -97,7 +97,7 @@ declare const parse: (url: string) => UrlObject;
  * @param url {String} url
  * @returns {IKV} url search part
  */
-declare const search: (url: string) => IKV;
+export declare const search: (url: string) => IKV;
 /**
  * get url hash part without # prefix
  *
@@ -110,7 +110,7 @@ declare const search: (url: string) => IKV;
  * @param url {String} url
  * @returns {String} url hash part
  */
-declare const hash: (url: string) => string;
+export declare const hash: (url: string) => string;
 /**
  * get last url part of key
  *
@@ -133,7 +133,7 @@ declare const hash: (url: string) => string;
  * @param pos {Number} pos
  * @returns {String} key path
  */
-declare const pathKey: (url: string, pos?: number) => string;
+export declare const pathKey: (url: string, pos?: number) => string;
 /**
  * get extname from path
  *
@@ -150,7 +150,7 @@ declare const pathKey: (url: string, pos?: number) => string;
  * @param url {String} url
  * @returns {String} extname
  */
-declare const extname: (url: string) => string;
+export declare const extname: (url: string) => string;
 /**
  * get basename from path
  *
@@ -166,7 +166,7 @@ declare const extname: (url: string) => string;
  * @param url {String} url
  * @returns {String} key path
  */
-declare const basename: (url: string) => string;
+export declare const basename: (url: string) => string;
 /**
  * remove host and left pathname + search + hash
  *
@@ -179,8 +179,8 @@ declare const basename: (url: string) => string;
  * @param url {String} url
  * @returns {String} key path
  */
-declare const pathmain: (url: string) => string;
-declare const zaxUrl: {
+export declare const pathmain: (url: string) => string;
+declare const _default: {
     parse: (url: string) => UrlObject;
     get: (url: string, key: string) => string;
     set: (url: string, key: string, value?: string) => string;
@@ -192,5 +192,4 @@ declare const zaxUrl: {
     extname: (url: string) => string;
     pathmain: (url: string) => string;
 };
-export { parse, get, set, del, search, hash, pathKey, basename, extname, pathmain };
-export default zaxUrl;
+export default _default;

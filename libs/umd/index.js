@@ -62,20 +62,19 @@
      * @param key {String} key
      * @returns {String} string of result
      */
-    var get = function (url, key) {
+    exports.get = function (url, key) {
         /* istanbul ignore next */
         if (!url) {
-            // console.log('url must be a string');
+            // console.log('url must be a string')
             return '';
         }
         if (!key) {
-            // console.log('key must be a string');
+            // console.log('key must be a string')
             return '';
         }
-        var searchObj = zaxUrl.search(url);
+        var searchObj = exports.search(url);
         return searchObj[key] || '';
     };
-    exports.get = get;
     /* istanbul ignore next */
     /**
      * set & get new url
@@ -91,16 +90,16 @@
      * @param value {String} value
      * @returns {String} new url
      */
-    var set = function (url, key, value) {
+    exports.set = function (url, key, value) {
         if (value === void 0) { value = ''; }
         if (!key) {
             console.log('key must be a string');
             return url;
         }
-        var searchObj = zaxUrl.search(url);
+        var searchObj = exports.search(url);
         searchObj[key] = value;
         var res = zaxUtil.objToStr(searchObj);
-        var hash = zaxUrl.parse(url).hash;
+        var hash = exports.parse(url).hash;
         var tmp = url.replace(hash, '');
         var askIdx = tmp.indexOf('?');
         askIdx = askIdx > -1 ? askIdx : tmp.length;
@@ -109,7 +108,6 @@
         var right = hash;
         return left + mid + right;
     };
-    exports.set = set;
     /**
      * delete key & get new url
      *
@@ -123,10 +121,9 @@
      * @param key {String} key
      * @returns {String} new url
      */
-    var del = function (url, key) {
-        return set(url, key, '');
+    exports.del = function (url, key) {
+        return exports.set(url, key, '');
     };
-    exports.del = del;
     /**
      * get key of value of url
      *
@@ -149,9 +146,9 @@
      * @param url {String} url
      * @returns {UrlObject} parse object
      */
-    var parse = function (url) {
+    exports.parse = function (url) {
         if (!url) {
-            // console.log('url must be a string');
+            // console.log('url must be a string')
             return {
                 href: '',
                 hash: '',
@@ -189,7 +186,6 @@
             };
         }
     };
-    exports.parse = parse;
     /**
      * get url search part
      *
@@ -202,15 +198,14 @@
      * @param url {String} url
      * @returns {IKV} url search part
      */
-    var search = function (url) {
-        var search = parse(url).search.replace('?', '');
+    exports.search = function (url) {
+        var search = exports.parse(url).search.replace('?', '');
         if (!search) {
             // console.log('no search char');
             return {};
         }
         return zaxUtil.strToObj(search);
     };
-    exports.search = search;
     /**
      * get url hash part without # prefix
      *
@@ -223,15 +218,14 @@
      * @param url {String} url
      * @returns {String} url hash part
      */
-    var hash = function (url) {
-        var hash = parse(url).hash.replace('#', '');
+    exports.hash = function (url) {
+        var hash = exports.parse(url).hash.replace('#', '');
         if (!hash) {
             console.log('no hash char');
             return '';
         }
         return hash;
     };
-    exports.hash = hash;
     /**
      * get last url part of key
      *
@@ -254,13 +248,12 @@
      * @param pos {Number} pos
      * @returns {String} key path
      */
-    var pathKey = function (url, pos) {
+    exports.pathKey = function (url, pos) {
         if (pos === void 0) { pos = 0; }
-        var pathname = parse(url).pathname || '';
+        var pathname = exports.parse(url).pathname || '';
         var last = pathname.split('/').pop() || '';
         return last.slice(pos);
     };
-    exports.pathKey = pathKey;
     /**
      * get extname from path
      *
@@ -277,8 +270,8 @@
      * @param url {String} url
      * @returns {String} extname
      */
-    var extname = function (url) {
-        var last = basename(url);
+    exports.extname = function (url) {
+        var last = exports.basename(url);
         if (last && last.indexOf('.') > -1) {
             var arr = last.split('.');
             /* istanbul ignore next */
@@ -290,7 +283,6 @@
         }
         return '';
     };
-    exports.extname = extname;
     /**
      * get basename from path
      *
@@ -306,12 +298,11 @@
      * @param url {String} url
      * @returns {String} key path
      */
-    var basename = function (url) {
-        var pathname = parse(url).pathname || '';
+    exports.basename = function (url) {
+        var pathname = exports.parse(url).pathname || '';
         var last = pathname.split('/').pop();
         return last || '';
     };
-    exports.basename = basename;
     /**
      * remove host and left pathname + search + hash
      *
@@ -324,24 +315,22 @@
      * @param url {String} url
      * @returns {String} key path
      */
-    var pathmain = function (url) {
-        var info = parse(url);
+    exports.pathmain = function (url) {
+        var info = exports.parse(url);
         var pathmain = info.pathname + info.search + info.hash;
         return pathmain;
     };
-    exports.pathmain = pathmain;
-    var zaxUrl = {
-        parse: parse,
-        get: get,
-        set: set,
-        del: del,
-        search: search,
-        hash: hash,
-        pathKey: pathKey,
-        basename: basename,
-        extname: extname,
-        pathmain: pathmain
+    exports.default = {
+        parse: exports.parse,
+        get: exports.get,
+        set: exports.set,
+        del: exports.del,
+        search: exports.search,
+        hash: exports.hash,
+        pathKey: exports.pathKey,
+        basename: exports.basename,
+        extname: exports.extname,
+        pathmain: exports.pathmain
     };
-    exports.default = zaxUrl;
 });
 //# sourceMappingURL=index.js.map
