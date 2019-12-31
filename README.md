@@ -25,7 +25,7 @@ npm i zax-url -S
 ~~~ javascript
 const zaxUrl = require('zax-url')
 or
-import zaxUrl from 'zax-url'
+import zaxUrl, { parse, get, set, del, search, hash, pathKey, basename, extname, pathmain } from 'zax-url'
 ~~~
 
 ## [Docs](https://github.com/jsonchou/zax-url/tree/master/docs)
