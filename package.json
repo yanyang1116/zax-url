@@ -4,12 +4,13 @@
 	"description": "zax-url",
 	"main": "./libs/cjs",
 	"browser": "./libs/es",
+	"sideEffects": false,
 	"directories": {
 		"test": "test",
 		"lib": "libs",
 		"doc": "docs"
 	},
-	"typings": "./libs/umd/index.d.ts",
+	"typings": "./libs/es/index.d.ts",
 	"scripts": {
 		"lint": "eslint --ext .ts src/",
 		"lint:fix": "eslint --fix --ext .ts src/",
