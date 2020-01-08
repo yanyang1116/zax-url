@@ -3,7 +3,6 @@
 	"version": "2.0.4",
 	"description": "zax-url",
 	"main": "./libs/cjs",
-	"browser": "./libs/es",
 	"sideEffects": false,
 	"directories": {
 		"test": "test",
