@@ -56,14 +56,25 @@
      * ```js
      * get("pages/index?id=2", 'id')
      * => 2
+     * get('id')
+     * => '' //empty
      * ```
      *
      * @param url {String} url
      * @param key {String} key
      * @returns {String} string of result
      */
-    exports.get = function (url, key) {
+    function get(url, key) {
         /* istanbul ignore next */
+        if (arguments.length === 1) {
+            if (typeof document !== 'undefined') {
+                key = url;
+                url = location.href;
+            }
+            else {
+                //server side & miniprogram
+            }
+        }
         if (!url) {
             // console.log('url must be a string')
             return '';
@@ -72,10 +83,10 @@
             // console.log('key must be a string')
             return '';
         }
-        var searchObj = exports.search(url);
+        var searchObj = search(url);
         return searchObj[key] || '';
-    };
-    /* istanbul ignore next */
+    }
+    exports.get = get;
     /**
      * set & get new url
      *
@@ -90,16 +101,15 @@
      * @param value {String} value
      * @returns {String} new url
      */
-    exports.set = function (url, key, value) {
+    function set(url, key, value) {
         if (value === void 0) { value = ''; }
         if (!key) {
-            console.log('key must be a string');
             return url;
         }
-        var searchObj = exports.search(url);
+        var searchObj = search(url);
         searchObj[key] = value;
         var res = zaxUtil.objToStr(searchObj);
-        var hash = exports.parse(url).hash;
+        var hash = parse(url).hash;
         var tmp = url.replace(hash, '');
         var askIdx = tmp.indexOf('?');
         askIdx = askIdx > -1 ? askIdx : tmp.length;
@@ -107,7 +117,8 @@
         var mid = res ? '?' + res : '';
         var right = hash;
         return left + mid + right;
-    };
+    }
+    exports.set = set;
     /**
      * delete key & get new url
      *
@@ -121,9 +132,10 @@
      * @param key {String} key
      * @returns {String} new url
      */
-    exports.del = function (url, key) {
-        return exports.set(url, key, '');
-    };
+    function del(url, key) {
+        return set(url, key, '');
+    }
+    exports.del = del;
     /**
      * get key of value of url
      *
@@ -146,7 +158,7 @@
      * @param url {String} url
      * @returns {UrlObject} parse object
      */
-    exports.parse = function (url) {
+    function parse(url) {
         if (!url) {
             // console.log('url must be a string')
             return {
@@ -185,7 +197,8 @@
                 search: search_1
             };
         }
-    };
+    }
+    exports.parse = parse;
     /**
      * get url search part
      *
@@ -198,14 +211,15 @@
      * @param url {String} url
      * @returns {IKV} url search part
      */
-    exports.search = function (url) {
-        var search = exports.parse(url).search.replace('?', '');
+    function search(url) {
+        var search = parse(url).search.replace('?', '');
         if (!search) {
             // console.log('no search char');
             return {};
         }
         return zaxUtil.strToObj(search);
-    };
+    }
+    exports.search = search;
     /**
      * get url hash part without # prefix
      *
@@ -218,14 +232,15 @@
      * @param url {String} url
      * @returns {String} url hash part
      */
-    exports.hash = function (url) {
-        var hash = exports.parse(url).hash.replace('#', '');
+    function hash(url) {
+        var hash = parse(url).hash.replace('#', '');
         if (!hash) {
             console.log('no hash char');
             return '';
         }
         return hash;
-    };
+    }
+    exports.hash = hash;
     /**
      * get last url part of key
      *
@@ -248,12 +263,13 @@
      * @param pos {Number} pos
      * @returns {String} key path
      */
-    exports.pathKey = function (url, pos) {
+    function pathKey(url, pos) {
         if (pos === void 0) { pos = 0; }
-        var pathname = exports.parse(url).pathname || '';
+        var pathname = parse(url).pathname || '';
         var last = pathname.split('/').pop() || '';
         return last.slice(pos);
-    };
+    }
+    exports.pathKey = pathKey;
     /**
      * get extname from path
      *
@@ -270,8 +286,8 @@
      * @param url {String} url
      * @returns {String} extname
      */
-    exports.extname = function (url) {
-        var last = exports.basename(url);
+    function extname(url) {
+        var last = basename(url);
         if (last && last.indexOf('.') > -1) {
             var arr = last.split('.');
             /* istanbul ignore next */
@@ -282,7 +298,8 @@
             }
         }
         return '';
-    };
+    }
+    exports.extname = extname;
     /**
      * get basename from path
      *
@@ -298,11 +315,12 @@
      * @param url {String} url
      * @returns {String} key path
      */
-    exports.basename = function (url) {
-        var pathname = exports.parse(url).pathname || '';
+    function basename(url) {
+        var pathname = parse(url).pathname || '';
         var last = pathname.split('/').pop();
         return last || '';
-    };
+    }
+    exports.basename = basename;
     /**
      * remove host and left pathname + search + hash
      *
@@ -315,22 +333,23 @@
      * @param url {String} url
      * @returns {String} key path
      */
-    exports.pathmain = function (url) {
-        var info = exports.parse(url);
+    function pathmain(url) {
+        var info = parse(url);
         var pathmain = info.pathname + info.search + info.hash;
         return pathmain;
-    };
+    }
+    exports.pathmain = pathmain;
     exports.default = {
-        parse: exports.parse,
-        get: exports.get,
-        set: exports.set,
-        del: exports.del,
-        search: exports.search,
-        hash: exports.hash,
-        pathKey: exports.pathKey,
-        basename: exports.basename,
-        extname: exports.extname,
-        pathmain: exports.pathmain
+        parse: parse,
+        get: get,
+        set: set,
+        del: del,
+        search: search,
+        hash: hash,
+        pathKey: pathKey,
+        basename: basename,
+        extname: extname,
+        pathmain: pathmain
     };
 });
 //# sourceMappingURL=index.js.map

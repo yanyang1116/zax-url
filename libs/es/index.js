@@ -45,14 +45,25 @@ let zaxUtil = {
  * ```js
  * get("pages/index?id=2", 'id')
  * => 2
+ * get('id')
+ * => '' //empty
  * ```
  *
  * @param url {String} url
  * @param key {String} key
  * @returns {String} string of result
  */
-export const get = (url, key) => {
+export function get(url, key) {
     /* istanbul ignore next */
+    if (arguments.length === 1) {
+        if (typeof document !== 'undefined') {
+            key = url;
+            url = location.href;
+        }
+        else {
+            //server side & miniprogram
+        }
+    }
     if (!url) {
         // console.log('url must be a string')
         return '';
@@ -63,8 +74,7 @@ export const get = (url, key) => {
     }
     let searchObj = search(url);
     return searchObj[key] || '';
-};
-/* istanbul ignore next */
+}
 /**
  * set & get new url
  *
@@ -79,9 +89,8 @@ export const get = (url, key) => {
  * @param value {String} value
  * @returns {String} new url
  */
-export const set = (url, key, value = '') => {
+export function set(url, key, value = '') {
     if (!key) {
-        console.log('key must be a string');
         return url;
     }
     let searchObj = search(url);
@@ -95,7 +104,7 @@ export const set = (url, key, value = '') => {
     let mid = res ? '?' + res : '';
     let right = hash;
     return left + mid + right;
-};
+}
 /**
  * delete key & get new url
  *
@@ -109,9 +118,9 @@ export const set = (url, key, value = '') => {
  * @param key {String} key
  * @returns {String} new url
  */
-export const del = (url, key) => {
+export function del(url, key) {
     return set(url, key, '');
-};
+}
 /**
  * get key of value of url
  *
@@ -134,7 +143,7 @@ export const del = (url, key) => {
  * @param url {String} url
  * @returns {UrlObject} parse object
  */
-export const parse = (url) => {
+export function parse(url) {
     if (!url) {
         // console.log('url must be a string')
         return {
@@ -173,7 +182,7 @@ export const parse = (url) => {
             search
         };
     }
-};
+}
 /**
  * get url search part
  *
@@ -186,14 +195,14 @@ export const parse = (url) => {
  * @param url {String} url
  * @returns {IKV} url search part
  */
-export const search = (url) => {
+export function search(url) {
     let search = parse(url).search.replace('?', '');
     if (!search) {
         // console.log('no search char');
         return {};
     }
     return zaxUtil.strToObj(search);
-};
+}
 /**
  * get url hash part without # prefix
  *
@@ -206,14 +215,14 @@ export const search = (url) => {
  * @param url {String} url
  * @returns {String} url hash part
  */
-export const hash = (url) => {
+export function hash(url) {
     let hash = parse(url).hash.replace('#', '');
     if (!hash) {
         console.log('no hash char');
         return '';
     }
     return hash;
-};
+}
 /**
  * get last url part of key
  *
@@ -236,11 +245,11 @@ export const hash = (url) => {
  * @param pos {Number} pos
  * @returns {String} key path
  */
-export const pathKey = (url, pos = 0) => {
+export function pathKey(url, pos = 0) {
     let pathname = parse(url).pathname || '';
     let last = pathname.split('/').pop() || '';
     return last.slice(pos);
-};
+}
 /**
  * get extname from path
  *
@@ -257,7 +266,7 @@ export const pathKey = (url, pos = 0) => {
  * @param url {String} url
  * @returns {String} extname
  */
-export const extname = (url) => {
+export function extname(url) {
     let last = basename(url);
     if (last && last.indexOf('.') > -1) {
         let arr = last.split('.');
@@ -269,7 +278,7 @@ export const extname = (url) => {
         }
     }
     return '';
-};
+}
 /**
  * get basename from path
  *
@@ -285,11 +294,11 @@ export const extname = (url) => {
  * @param url {String} url
  * @returns {String} key path
  */
-export const basename = (url) => {
+export function basename(url) {
     let pathname = parse(url).pathname || '';
     let last = pathname.split('/').pop();
     return last || '';
-};
+}
 /**
  * remove host and left pathname + search + hash
  *
@@ -302,11 +311,11 @@ export const basename = (url) => {
  * @param url {String} url
  * @returns {String} key path
  */
-export const pathmain = (url) => {
+export function pathmain(url) {
     let info = parse(url);
     let pathmain = info.pathname + info.search + info.hash;
     return pathmain;
-};
+}
 export default {
     parse,
     get,

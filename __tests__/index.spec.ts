@@ -14,6 +14,10 @@ describe('zaxUrl', () => {
 		})
 	})
 
+	// beforeEach(()=>{
+
+	// })
+
 	it(`parse`, () => {
 		expect(parse(mixUrl)).toEqual({
 			host: 'demo.com',
@@ -126,6 +130,23 @@ describe('zaxUrl', () => {
 		expect(get(mixUrl, 'bizOrigin')).toEqual('foo')
 		expect(get('http://demo.com/?id=1', 'bizOrigin')).toEqual('')
 		expect(get('http://demo.com/?id=1', '')).toEqual('')
+
+		let url = 'http://demo.com/?id=1'
+		Object.defineProperty(window, 'location', {
+			value: {
+				href: url
+			}
+		})
+
+		expect(window.location.href).toEqual(url)
+
+		expect(get('id')).toEqual('1')
+
+		Object.defineProperty(window.location, 'href', {
+			writable: true,
+			value: ''
+		  });
+		expect(get('id')).toEqual('')
 	})
 
 	it(`set`, () => {
@@ -137,6 +158,8 @@ describe('zaxUrl', () => {
 		expect(set('http://demo.com/?id=1', 'foo', 'bar')).toEqual('http://demo.com/?id=1&foo=bar')
 		expect(set('http://demo.com?id=1#test', 'foo', 'bar')).toEqual('http://demo.com?id=1&foo=bar#test')
 		expect(set('http://demo.com/?id=1#test', 'foo', 'bar')).toEqual('http://demo.com/?id=1&foo=bar#test')
+		expect(set('http://demo.com/?id=1#test', 'foo')).toEqual('http://demo.com/?id=1#test')
+		expect(set('http://demo.com', 'foo')).toEqual('http://demo.com')
 
 		expect(set('https://a-uat.demo.com/p/83755233', 'accessKey', '123')).toEqual('https://a-uat.demo.com/p/83755233?accessKey=123')
 		expect(

@@ -26,13 +26,15 @@ declare type UrlObject = {
  * ```js
  * get("pages/index?id=2", 'id')
  * => 2
+ * get('id')
+ * => '' //empty
  * ```
  *
  * @param url {String} url
  * @param key {String} key
  * @returns {String} string of result
  */
-export declare const get: (url: string, key: string) => string;
+export declare function get(url: string, key?: string): string;
 /**
  * set & get new url
  *
@@ -47,7 +49,7 @@ export declare const get: (url: string, key: string) => string;
  * @param value {String} value
  * @returns {String} new url
  */
-export declare const set: (url: string, key: string, value?: string) => string;
+export declare function set(url: string, key: string, value?: string): string;
 /**
  * delete key & get new url
  *
@@ -61,7 +63,7 @@ export declare const set: (url: string, key: string, value?: string) => string;
  * @param key {String} key
  * @returns {String} new url
  */
-export declare const del: (url: string, key: string) => string;
+export declare function del(url: string, key: string): string;
 /**
  * get key of value of url
  *
@@ -84,7 +86,7 @@ export declare const del: (url: string, key: string) => string;
  * @param url {String} url
  * @returns {UrlObject} parse object
  */
-export declare const parse: (url: string) => UrlObject;
+export declare function parse(url: string): UrlObject;
 /**
  * get url search part
  *
@@ -97,7 +99,7 @@ export declare const parse: (url: string) => UrlObject;
  * @param url {String} url
  * @returns {IKV} url search part
  */
-export declare const search: (url: string) => IKV;
+export declare function search(url: string): IKV;
 /**
  * get url hash part without # prefix
  *
@@ -110,7 +112,7 @@ export declare const search: (url: string) => IKV;
  * @param url {String} url
  * @returns {String} url hash part
  */
-export declare const hash: (url: string) => string;
+export declare function hash(url: string): string;
 /**
  * get last url part of key
  *
@@ -133,7 +135,7 @@ export declare const hash: (url: string) => string;
  * @param pos {Number} pos
  * @returns {String} key path
  */
-export declare const pathKey: (url: string, pos?: number) => string;
+export declare function pathKey(url: string, pos?: number): string;
 /**
  * get extname from path
  *
@@ -150,7 +152,7 @@ export declare const pathKey: (url: string, pos?: number) => string;
  * @param url {String} url
  * @returns {String} extname
  */
-export declare const extname: (url: string) => string;
+export declare function extname(url: string): string;
 /**
  * get basename from path
  *
@@ -166,7 +168,7 @@ export declare const extname: (url: string) => string;
  * @param url {String} url
  * @returns {String} key path
  */
-export declare const basename: (url: string) => string;
+export declare function basename(url: string): string;
 /**
  * remove host and left pathname + search + hash
  *
@@ -179,17 +181,17 @@ export declare const basename: (url: string) => string;
  * @param url {String} url
  * @returns {String} key path
  */
-export declare const pathmain: (url: string) => string;
+export declare function pathmain(url: string): string;
 declare const _default: {
-    parse: (url: string) => UrlObject;
-    get: (url: string, key: string) => string;
-    set: (url: string, key: string, value?: string) => string;
-    del: (url: string, key: string) => string;
-    search: (url: string) => IKV;
-    hash: (url: string) => string;
-    pathKey: (url: string, pos?: number) => string;
-    basename: (url: string) => string;
-    extname: (url: string) => string;
-    pathmain: (url: string) => string;
+    parse: typeof parse;
+    get: typeof get;
+    set: typeof set;
+    del: typeof del;
+    search: typeof search;
+    hash: typeof hash;
+    pathKey: typeof pathKey;
+    basename: typeof basename;
+    extname: typeof extname;
+    pathmain: typeof pathmain;
 };
 export default _default;
