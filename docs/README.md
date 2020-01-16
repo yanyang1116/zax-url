@@ -11,6 +11,10 @@
 **Author**: jsonchou  
 
 * [zaxUrl](#module_zaxUrl)
+    * [~get(key, url)](#module_zaxUrl..get) ⇒ <code>String</code>
+    * [~get(key)](#module_zaxUrl..get) ⇒ <code>String</code>
+    * [~set(url, kvGroups)](#module_zaxUrl..set) ⇒ <code>String</code>
+    * [~set(url, key, value)](#module_zaxUrl..set) ⇒ <code>String</code>
     * [~del(url, key)](#module_zaxUrl..del) ⇒ <code>String</code>
     * [~parse(url)](#module_zaxUrl..parse) ⇒ <code>UrlObject</code>
     * [~search(url)](#module_zaxUrl..search) ⇒ <code>IKV</code>
@@ -20,6 +24,78 @@
     * [~basename(url)](#module_zaxUrl..basename) ⇒ <code>String</code>
     * [~pathmain(url)](#module_zaxUrl..pathmain) ⇒ <code>String</code>
 
+<a name="module_zaxUrl..get"></a>
+
+### zaxUrl~get(key, url) ⇒ <code>String</code>
+<p>get value from url search part mode</p>
+
+**Kind**: inner method of [<code>zaxUrl</code>](#module_zaxUrl)  
+**Returns**: <code>String</code> - <p>string of result</p>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>String</code> | <p>key</p> |
+| url | <code>String</code> | <p>url</p> |
+
+**Example**  
+```js
+get("pages/index?id=2", 'id')
+=> 2
+```
+<a name="module_zaxUrl..get"></a>
+
+### zaxUrl~get(key) ⇒ <code>String</code>
+<p>get value from url search part mode</p>
+
+**Kind**: inner method of [<code>zaxUrl</code>](#module_zaxUrl)  
+**Returns**: <code>String</code> - <p>string of result</p>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>String</code> | <p>key</p> |
+
+**Example**  
+```js
+get('id')
+=> '' //empty string
+```
+<a name="module_zaxUrl..set"></a>
+
+### zaxUrl~set(url, kvGroups) ⇒ <code>String</code>
+<p>set &amp; get new url</p>
+
+**Kind**: inner method of [<code>zaxUrl</code>](#module_zaxUrl)  
+**Returns**: <code>String</code> - <p>new url</p>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| url | <code>String</code> | <p>url</p> |
+| kvGroups | <code>Record.&lt;string, (string\|number)&gt;</code> | <p>key value pairs</p> |
+
+**Example**  
+```js
+set("pages/index?id=2", {k:1,v:'t'})
+=> pages/index?id=2&k=1&v=t
+```
+<a name="module_zaxUrl..set"></a>
+
+### zaxUrl~set(url, key, value) ⇒ <code>String</code>
+<p>set &amp; get new url</p>
+
+**Kind**: inner method of [<code>zaxUrl</code>](#module_zaxUrl)  
+**Returns**: <code>String</code> - <p>new url</p>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| url | <code>String</code> | <p>url</p> |
+| key | <code>String</code> | <p>key</p> |
+| value | <code>String</code> | <p>value</p> |
+
+**Example**  
+```js
+set("pages/index?id=2", 'foo','bar')
+=> pages/index?id=2&foo=bar
+```
 <a name="module_zaxUrl..del"></a>
 
 ### zaxUrl~del(url, key) ⇒ <code>String</code>

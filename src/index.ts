@@ -72,8 +72,6 @@ type Nothing91 = {}
  * ```js
  * get("pages/index?id=2", 'id')
  * => 2
- * get('id')
- * => '' //empty string
  * ```
  * @param key {String} key
  * @param url {String} url
@@ -83,12 +81,17 @@ type Nothing91 = {}
  *
  * @name get
  * @function
+ * @example
+ * ```js
+ * get('id')
+ * => '' //empty string
+ * ```
  * @param key {String} key
  * @returns {String} string of result
  */
 
-export function get<T extends string>(key: T): T
-export function get<T extends string>(url: T, key: T): T
+// export function get<T extends string>(key: T): T
+// export function get<T extends string>(url: T, key: T): T
 export function get(url: string, key?: string): string {
 	if (arguments.length === 1) {
 		/* istanbul ignore next */
@@ -152,8 +155,8 @@ type Nothing77 = {}
  *
  */
 
-export function set<T extends Record<string, string | number>>(url: string, kvGroups: T): string
-export function set<T extends string>(url: T, key: T, value?: T): T
+// export function set<T extends Record<string, string | number>>(url: string, kvGroups: T): string
+// export function set<T extends string>(url: T, key: T, value?: T): T
 export function set<T extends Record<string, string | number>>(url: string, key?: T | string, value: string = ''): string {
 	if (!key) {
 		return url
