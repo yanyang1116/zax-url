@@ -4,6 +4,7 @@
  * @author jsonchou
  * @description support server & client & miniprogram side
  * @see https://github.com/jsonchou/zax-url
+ * @see https://github.com/microsoft/TypeScript/issues/25590
  */
 
 type IKV = {
@@ -60,30 +61,42 @@ let zaxUtil: Record<string, any> = {
 	}
 }
 
+type Nothing91 = {}
+
 /**
- * get value from url search part
+ * get value from url search part mode
  *
+ * @name get
+ * @function
  * @example
  * ```js
  * get("pages/index?id=2", 'id')
  * => 2
  * get('id')
- * => '' //empty
+ * => '' //empty string
  * ```
- *
+ * @param key {String} key
  * @param url {String} url
+ * @returns {String} string of result
+ *//**
+ * get value from url search part mode
+ *
+ * @name get
+ * @function
  * @param key {String} key
  * @returns {String} string of result
  */
+
+export function get<T extends string>(key: T): T
+export function get<T extends string>(url: T, key: T): T
 export function get(url: string, key?: string): string {
-	/* istanbul ignore next */
 	if (arguments.length === 1) {
+		/* istanbul ignore next */
 		if (typeof document !== 'undefined') {
 			key = url
 			url = location.href
-		}else{
+		} else {
 			//server side & miniprogram
-
 		}
 	}
 	if (!url) {
@@ -103,28 +116,56 @@ export function get(url: string, key?: string): string {
 type Nothing77 = {}
 
 /**
+ *
  * set & get new url
  *
  * @example
+ *
+ * ```js
+ * set("pages/index?id=2", {k:1,v:'t'})
+ * => pages/index?id=2&k=1&v=t
+ * ```
+ *
+ * @name set
+ * @function
+ * @param url {String} url
+ * @param kvGroups {Record<string, string | number>} key value pairs
+ * @returns {String} new url
+ *
+ *//**
+ *
+ * set & get new url
+ *
+ * @example
+ *
  * ```js
  * set("pages/index?id=2", 'foo','bar')
  * => pages/index?id=2&foo=bar
  * ```
  *
+ * @name set
+ * @function
  * @param url {String} url
  * @param key {String} key
  * @param value {String} value
  * @returns {String} new url
+ *
  */
 
-export function set(url: string, key: string, value = ''): string {
+export function set<T extends Record<string, string | number>>(url: string, kvGroups: T): string
+export function set<T extends string>(url: T, key: T, value?: T): T
+export function set<T extends Record<string, string | number>>(url: string, key?: T | string, value: string = ''): string {
 	if (!key) {
 		return url
 	}
 
 	let searchObj = search(url) as IKV
 
-	searchObj[key] = value
+	if (Object.keys(key).length && key.constructor === Object) {
+		Object.assign(searchObj, key as T)
+	} else {
+		searchObj[key as string] = value
+	}
 
 	let res = zaxUtil.objToStr(searchObj)
 

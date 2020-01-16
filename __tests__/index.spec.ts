@@ -145,7 +145,7 @@ describe('zaxUrl', () => {
 		Object.defineProperty(window.location, 'href', {
 			writable: true,
 			value: ''
-		  });
+		})
 		expect(get('id')).toEqual('')
 	})
 
@@ -159,6 +159,11 @@ describe('zaxUrl', () => {
 		expect(set('http://demo.com?id=1#test', 'foo', 'bar')).toEqual('http://demo.com?id=1&foo=bar#test')
 		expect(set('http://demo.com/?id=1#test', 'foo', 'bar')).toEqual('http://demo.com/?id=1&foo=bar#test')
 		expect(set('http://demo.com/?id=1#test', 'foo')).toEqual('http://demo.com/?id=1#test')
+
+		expect(set('http://demo.com/?id=1#test', { k: 1, v: 't' })).toEqual('http://demo.com/?id=1&k=1&v=t#test')
+		expect(set('http://demo.com/', { k: 1, v: 't' })).toEqual('http://demo.com/?k=1&v=t')
+		expect(set('http://demo.com', { k: 1, v: 't' })).toEqual('http://demo.com?k=1&v=t')
+
 		expect(set('http://demo.com', 'foo')).toEqual('http://demo.com')
 
 		expect(set('https://a-uat.demo.com/p/83755233', 'accessKey', '123')).toEqual('https://a-uat.demo.com/p/83755233?accessKey=123')
