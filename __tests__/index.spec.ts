@@ -164,6 +164,11 @@ describe('zaxUrl', () => {
 		expect(set('http://demo.com/', { k: 1, v: 't' })).toEqual('http://demo.com/?k=1&v=t')
 		expect(set('http://demo.com', { k: 1, v: 't' })).toEqual('http://demo.com?k=1&v=t')
 
+		expect(set('/pages/home/index/?id=1', { k: 1, v: 't' })).toEqual('/pages/home/index/?id=1&k=1&v=t')
+		expect(set('/pages/home/index/', { k: 1, v: 't' })).toEqual('/pages/home/index/?k=1&v=t')
+		expect(set('/pages/home/index', { k: 1, v: 't' })).toEqual('/pages/home/index?k=1&v=t')
+		expect(set('/pages/home/index', { k: 1, v: '' })).toEqual('/pages/home/index?k=1')
+
 		expect(set('http://demo.com', 'foo')).toEqual('http://demo.com')
 
 		expect(set('https://a-uat.demo.com/p/83755233', 'accessKey', '123')).toEqual('https://a-uat.demo.com/p/83755233?accessKey=123')
