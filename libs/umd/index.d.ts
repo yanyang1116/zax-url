@@ -6,10 +6,8 @@
  * @see https://github.com/jsonchou/zax-url
  * @see https://github.com/microsoft/TypeScript/issues/25590
  */
-declare type IKV = {
-    [key: string]: string | number;
-};
-declare type UrlObject = {
+export declare type IKV = Record<string, string | number>;
+export declare type UrlDescriptor = {
     href: string;
     hash: string;
     search: string;
@@ -33,21 +31,28 @@ declare type UrlObject = {
  * @param key {String} key
  * @param url {String} url
  * @returns {String} string of result
- */ /**
-* get value from url search part mode
-*
-* @name get
-* @function
-* @example
-* ```js
-* get('id')
-* => '' //empty string
-* ```
-* @param key {String} key
-* @returns {String} string of result
-*/
+ */
 export declare function get(url: string, key?: string): string;
 /**
+*
+* set & get new url
+*
+* @example
+*
+* ```js
+* set("pages/index?id=2", 'foo','bar')
+* => pages/index?id=2&foo=bar
+* ```
+*
+* @name set
+* @function
+* @override
+* @param url {String} url
+* @param key {String} key
+* @param value {String} value
+* @returns {String} new url
+*
+*/ /**
  *
  * set & get new url
  *
@@ -64,26 +69,8 @@ export declare function get(url: string, key?: string): string;
  * @param kvGroups {Record<string, string | number>} key value pairs
  * @returns {String} new url
  *
- */ /**
-*
-* set & get new url
-*
-* @example
-*
-* ```js
-* set("pages/index?id=2", 'foo','bar')
-* => pages/index?id=2&foo=bar
-* ```
-*
-* @name set
-* @function
-* @param url {String} url
-* @param key {String} key
-* @param value {String} value
-* @returns {String} new url
-*
-*/
-export declare function set<T extends Record<string, string | number>>(url: string, key?: T | string, value?: string): string;
+ */
+export declare function set(url: string, key: string | IKV, value?: string): string;
 /**
  * delete key & get new url
  *
@@ -118,9 +105,9 @@ export declare function del(url: string, key: string): string;
  * ```
  *
  * @param url {String} url
- * @returns {UrlObject} parse object
+ * @returns {UrlDescriptor} parse object
  */
-export declare function parse(url: string): UrlObject;
+export declare function parse(url: string): UrlDescriptor;
 /**
  * get url search part
  *

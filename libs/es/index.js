@@ -52,21 +52,7 @@ let zaxUtil = {
  * @param key {String} key
  * @param url {String} url
  * @returns {String} string of result
- */ /**
-* get value from url search part mode
-*
-* @name get
-* @function
-* @example
-* ```js
-* get('id')
-* => '' //empty string
-* ```
-* @param key {String} key
-* @returns {String} string of result
-*/
-// export function get<T extends string>(key: T): T
-// export function get<T extends string>(url: T, key: T): T
+ */
 export function get(url, key) {
     if (arguments.length === 1) {
         /* istanbul ignore next */
@@ -90,6 +76,25 @@ export function get(url, key) {
     return searchObj[key] || '';
 }
 /**
+*
+* set & get new url
+*
+* @example
+*
+* ```js
+* set("pages/index?id=2", 'foo','bar')
+* => pages/index?id=2&foo=bar
+* ```
+*
+* @name set
+* @function
+* @override
+* @param url {String} url
+* @param key {String} key
+* @param value {String} value
+* @returns {String} new url
+*
+*/ /**
  *
  * set & get new url
  *
@@ -106,27 +111,9 @@ export function get(url, key) {
  * @param kvGroups {Record<string, string | number>} key value pairs
  * @returns {String} new url
  *
- */ /**
-*
-* set & get new url
-*
-* @example
-*
-* ```js
-* set("pages/index?id=2", 'foo','bar')
-* => pages/index?id=2&foo=bar
-* ```
-*
-* @name set
-* @function
-* @param url {String} url
-* @param key {String} key
-* @param value {String} value
-* @returns {String} new url
-*
-*/
-// export function set<T extends Record<string, string | number>>(url: string, kvGroups: T): string
-// export function set<T extends string>(url: T, key: T, value?: T): T
+ */
+// export function set(url: string, kvGroups: IKV): string
+// export function set(url: string, key: string, value: string): string
 export function set(url, key, value = '') {
     if (!key) {
         return url;
@@ -184,7 +171,7 @@ export function del(url, key) {
  * ```
  *
  * @param url {String} url
- * @returns {UrlObject} parse object
+ * @returns {UrlDescriptor} parse object
  */
 export function parse(url) {
     if (!url) {

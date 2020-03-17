@@ -7,11 +7,9 @@
  * @see https://github.com/microsoft/TypeScript/issues/25590
  */
 
-type IKV = {
-	[key: string]: string | number
-}
+export type IKV = Record<string, string | number>
 
-type UrlObject = {
+export type UrlDescriptor = {
 	href: string
 	hash: string
 	search: string
@@ -76,22 +74,8 @@ type Nothing91 = {}
  * @param key {String} key
  * @param url {String} url
  * @returns {String} string of result
- *//**
- * get value from url search part mode
- *
- * @name get
- * @function
- * @example
- * ```js
- * get('id')
- * => '' //empty string
- * ```
- * @param key {String} key
- * @returns {String} string of result
  */
 
-// export function get<T extends string>(key: T): T
-// export function get<T extends string>(url: T, key: T): T
 export function get(url: string, key?: string): string {
 	if (arguments.length === 1) {
 		/* istanbul ignore next */
@@ -119,6 +103,25 @@ export function get(url: string, key?: string): string {
 type Nothing77 = {}
 
 /**
+*
+* set & get new url
+*
+* @example
+*
+* ```js
+* set("pages/index?id=2", 'foo','bar')
+* => pages/index?id=2&foo=bar
+* ```
+*
+* @name set
+* @function
+* @override
+* @param url {String} url
+* @param key {String} key
+* @param value {String} value
+* @returns {String} new url
+*
+*//**
  *
  * set & get new url
  *
@@ -135,29 +138,11 @@ type Nothing77 = {}
  * @param kvGroups {Record<string, string | number>} key value pairs
  * @returns {String} new url
  *
- *//**
- *
- * set & get new url
- *
- * @example
- *
- * ```js
- * set("pages/index?id=2", 'foo','bar')
- * => pages/index?id=2&foo=bar
- * ```
- *
- * @name set
- * @function
- * @param url {String} url
- * @param key {String} key
- * @param value {String} value
- * @returns {String} new url
- *
  */
 
-// export function set<T extends Record<string, string | number>>(url: string, kvGroups: T): string
-// export function set<T extends string>(url: T, key: T, value?: T): T
-export function set<T extends Record<string, string | number>>(url: string, key?: T | string, value: string = ''): string {
+// export function set(url: string, kvGroups: IKV): string
+// export function set(url: string, key: string, value: string): string
+export function set(url: string, key: string | IKV, value: string = ''): string {
 	if (!key) {
 		return url
 	}
@@ -165,7 +150,7 @@ export function set<T extends Record<string, string | number>>(url: string, key?
 	let searchObj = search(url) as IKV
 
 	if (Object.keys(key).length && key.constructor === Object) {
-		Object.assign(searchObj, key as T)
+		Object.assign(searchObj, key as IKV)
 	} else {
 		searchObj[key as string] = value
 	}
@@ -226,9 +211,9 @@ type Nothing2 = {}
  * ```
  *
  * @param url {String} url
- * @returns {UrlObject} parse object
+ * @returns {UrlDescriptor} parse object
  */
-export function parse(url: string): UrlObject {
+export function parse(url: string): UrlDescriptor {
 	if (!url) {
 		// console.log('url must be a string')
 		return {
