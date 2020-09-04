@@ -82,8 +82,8 @@ export function get(url, key) {
 * @example
 *
 * ```js
-* set("pages/index?id=2", 'foo','bar')
-* => pages/index?id=2&foo=bar
+* set("pages/foo/index?id=2", 'foo','bar')
+* => pages/foo/index?id=2&foo=bar
 * ```
 *
 * @name set
@@ -140,8 +140,8 @@ export function set(url, key, value = '') {
  *
  * @example
  * ```js
- * del("pages/index?id=2", 'id')
- * => pages/index
+ * del("pages/foo/index?id=2", 'id')
+ * => pages/foo/index
  * ```
  *
  * @param url {String} url
@@ -156,13 +156,13 @@ export function del(url, key) {
  *
  * @example
  * ```js
- * parse("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * parse("https://demo.com/foo/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
  * => {
     host: 'demo.com',
     hostname: 'demo.com',
     href: mixUrl,
     origin: 'https://demo.com',
-    pathname: '/index',
+    pathname: '/foo/index',
     port: '443',
     protocol: 'https:',
     hash: '#/path/id=3?bizOrigin=bar',
@@ -218,7 +218,7 @@ export function parse(url) {
  *
  * @example
  * ```js
- * search("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * search("https://demo.com/foo/ndex?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
  * => { bizOrigin: 'foo', other: 'quz' }
  * ```
  *
@@ -238,7 +238,7 @@ export function search(url) {
  *
  * @example
  * ```js
- * hash("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * hash("https://demo.com/foo/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
  * => /path/id=3?bizOrigin=bar
  * ```
  *
@@ -258,15 +258,15 @@ export function hash(url) {
  *
  * @example
  * ```js
- * pathKey("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * pathKey("https://demo.com/foo/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
  * => index
  *
  *
- * pathKey("https://demo.com/p123?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar",1)
+ * pathKey("https://demo.com/foo//index/p123?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar",1)
  * => 123
  *
  *
- * pathKey("https://demo.com/p-123?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar",2)
+ * pathKey("https://demo.com/foo/index/p-123?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar",2)
  * => 123
  *
  * ```
@@ -314,10 +314,10 @@ export function extname(url) {
  *
  * @example
  * ```js
- * basename("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * basename("https://demo.com/foo/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
  * => index
  *
- * basename("https://demo.com/dairy.txt?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * basename("https://demo.com/foo/dairy.txt?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
  * => dairy.txt
  * ```
  *
@@ -334,7 +334,7 @@ export function basename(url) {
  *
  * @example
  * ```js
- * pathmain("https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
+ * pathmain("https://demo.com/foo/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar")
  * => /index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar
  * ```
  *

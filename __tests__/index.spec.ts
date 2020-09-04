@@ -2,7 +2,7 @@ import zaxUrl, { parse, get, set, del, search, hash, pathKey, basename, extname,
 
 import { log } from '../src/_utils/index'
 
-const mixUrl = 'https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar'
+const mixUrl = 'https://demo.com/foo/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar'
 
 describe('zaxUrl', () => {
 	let keys = Object.keys(zaxUrl)
@@ -24,43 +24,43 @@ describe('zaxUrl', () => {
 			hostname: 'demo.com',
 			href: mixUrl,
 			origin: 'https://demo.com',
-			pathname: '/index',
+			pathname: '/foo/index',
 			port: '443',
 			protocol: 'https:',
 			hash: '#/path/id=3?bizOrigin=bar',
 			search: '?bizOrigin=foo&other=quz'
 		})
 
-		expect(parse('https://demo.com/index')).toEqual({
+		expect(parse('https://demo.com/foo/index')).toEqual({
 			host: 'demo.com',
 			hostname: 'demo.com',
-			href: 'https://demo.com/index',
+			href: 'https://demo.com/foo/index',
 			origin: 'https://demo.com',
-			pathname: '/index',
+			pathname: '/foo/index',
 			port: '443',
 			protocol: 'https:',
 			hash: '',
 			search: ''
 		})
 
-		expect(parse('https://demo.com/index?id=1')).toEqual({
+		expect(parse('https://demo.com/foo/index?id=1')).toEqual({
 			host: 'demo.com',
 			hostname: 'demo.com',
-			href: 'https://demo.com/index?id=1',
+			href: 'https://demo.com/foo/index?id=1',
 			origin: 'https://demo.com',
-			pathname: '/index',
+			pathname: '/foo/index',
 			port: '443',
 			protocol: 'https:',
 			hash: '',
 			search: '?id=1'
 		})
 
-		expect(parse('https://demo.com/index#tag')).toEqual({
+		expect(parse('https://demo.com/foo/index#tag')).toEqual({
 			host: 'demo.com',
 			hostname: 'demo.com',
-			href: 'https://demo.com/index#tag',
+			href: 'https://demo.com/foo/index#tag',
 			origin: 'https://demo.com',
-			pathname: '/index',
+			pathname: '/foo/index',
 			port: '443',
 			protocol: 'https:',
 			hash: '#tag',
@@ -150,7 +150,7 @@ describe('zaxUrl', () => {
 	})
 
 	it(`set`, () => {
-		expect(set(mixUrl, 'bizOrigin', 'baz')).toEqual('https://demo.com/index?bizOrigin=baz&other=quz#/path/id=3?bizOrigin=bar')
+		expect(set(mixUrl, 'bizOrigin', 'baz')).toEqual('https://demo.com/foo/index?bizOrigin=baz&other=quz#/path/id=3?bizOrigin=bar')
 		expect(set(mixUrl, '', 'baz')).toEqual(mixUrl)
 		expect(set('http://demo.com/', 'foo', 'bar')).toEqual('http://demo.com/?foo=bar')
 		expect(set('http://demo.com', 'foo', 'bar')).toEqual('http://demo.com?foo=bar')
@@ -184,12 +184,12 @@ describe('zaxUrl', () => {
 	})
 
 	it(`del`, () => {
-		expect(del(mixUrl, 'bizOrigin')).toEqual('https://demo.com/index?other=quz#/path/id=3?bizOrigin=bar')
+		expect(del(mixUrl, 'bizOrigin')).toEqual('https://demo.com/foo/index?other=quz#/path/id=3?bizOrigin=bar')
 	})
 
 	it(`search`, () => {
 		expect(search(mixUrl)).toEqual({ bizOrigin: 'foo', other: 'quz' })
-		expect(search('https://demo.com/index#/path/id=3?bizOrigin=bar')).toEqual({})
+		expect(search('https://demo.com/foo/index#/path/id=3?bizOrigin=bar')).toEqual({})
 	})
 
 	it(`hash`, () => {
@@ -207,12 +207,17 @@ describe('zaxUrl', () => {
 		expect(pathKey('http://demo.com', 0)).toEqual('')
 		expect(pathKey('http://demo.com/d987', 5)).toEqual('')
 		expect(pathKey('http://demo.com/d987', 1)).toEqual('987')
+
+		expect(pathKey('http://demo.com/foo/bar/doo/d987', 5)).toEqual('')
+		expect(pathKey('http://demo.com/foo/bar/doo/d987', 1)).toEqual('987')
+
+
 	})
 
 	it(`basename`, () => {
 		expect(basename(mixUrl)).toEqual('index')
-		expect(basename('https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')).toEqual('index')
-		expect(basename('https://demo.com/index.html?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')).toEqual('index.html')
+		expect(basename('https://demo.com/foo/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')).toEqual('index')
+		expect(basename('https://demo.com/foo/index.html?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')).toEqual('index.html')
 		expect(basename('https://demo.com/log.txt?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')).toEqual('log.txt')
 		expect(basename('index')).toEqual('index')
 		expect(basename('log.txt')).toEqual('log.txt')
@@ -221,8 +226,8 @@ describe('zaxUrl', () => {
 
 	it(`extname`, () => {
 		expect(extname(mixUrl)).toEqual('')
-		expect(extname('https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')).toEqual('')
-		expect(extname('https://demo.com/index.html?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')).toEqual('.html')
+		expect(extname('https://demo.com/foo/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')).toEqual('')
+		expect(extname('https://demo.com/foo/index.html?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')).toEqual('.html')
 		expect(extname('https://demo.com/log.txt?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')).toEqual('.txt')
 		expect(extname('index')).toEqual('')
 		expect(extname('http://demo.com/.txt')).toEqual('.txt')
@@ -234,8 +239,8 @@ describe('zaxUrl', () => {
 	})
 
 	it(`pathmain`, () => {
-		expect(pathmain(mixUrl)).toEqual('/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
-		expect(pathmain('https://demo.com/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')).toEqual('/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
+		expect(pathmain(mixUrl)).toEqual('/foo/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
+		expect(pathmain('https://demo.com/foo/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')).toEqual('/foo/index?bizOrigin=foo&other=quz#/path/id=3?bizOrigin=bar')
 		expect(pathmain('http://demo.com/d987')).toEqual('/d987')
 		expect(pathmain('http://demo.com/d987/dax')).toEqual('/d987/dax')
 	})
